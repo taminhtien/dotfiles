@@ -107,6 +107,8 @@ set cursorline
 set laststatus=2
 set formatoptions-=or " Don't add the comment prefix when I hit enter or o/O on a comment line."
 set ttimeoutlen=50
+set noswapfile " No stupid .swp file
+
 nmap <Leader><CR> :nohlsearch<cr>
 
 " RSpec.vim mappings
