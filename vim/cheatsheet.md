@@ -5,7 +5,7 @@
 ### Moving within a line
 
 |Mapping|Summary|
-|--|--|
+|---|---|
 |h, l|move left/right by character|
 |w|move forward one (w)ord|
 |b|move (b)ackward one word|
@@ -14,7 +14,7 @@
 ### Jumping within a line
 
 |Mapping|Summary|
-|--|--|
+|---|---|
 |f<char>|(f)ind a character forward in a line and move to it|
 |t<char>|find a character forward in a line and move un(t)il it (one character before)|
 |F<char>|(f)ind a character backward in a line and move to it|
@@ -25,7 +25,7 @@
 ### Moving between lines
 
 |Mapping|Summary|
-|--|--|
+|---|---|
 |j, k|move up/down one line|
 |H, M, L|move (H)igh, (M)iddle, or (L)ow within the viewport|
 |/|search|
