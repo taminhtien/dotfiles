@@ -60,6 +60,13 @@ let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
 
+Plugin 'scrooloose/nerdtree'
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeAutoDeleteBuffer = 1
+let NERDTreeIgnore=['.git$', '\.swp$', '\.DS_Store$']
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -80,9 +87,17 @@ nmap <leader>ve :edit $MYVIMRC<cr>
 " vr means vim reload
 nmap <leader>vr :source $MYVIMRC<cr>
 
-" jk or kj to escape insert mode
-imap jk <esc>
-imap kj <esc>
+" opens NerdTree
+nmap <leader>n :NERDTreeToggle<CR>
+
+" Shift-Enter to escape in Insert Mode
+inoremap ✠ <Esc>
+
+" Navigation around windows
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
 
 set encoding=utf-8
 set number
@@ -95,7 +110,6 @@ set splitright
 set numberwidth=4
 set nowrap
 set showcmd
-set pastetoggle=<F2>
 set backspace=indent,eol,start
 set tabstop=2
 set shiftwidth=2
@@ -106,8 +120,17 @@ set ignorecase
 set cursorline
 set laststatus=2
 set formatoptions-=or " Don't add the comment prefix when I hit enter or o/O on a comment line."
-set ttimeoutlen=50
+
+" Lower timeout for mappings (faster response)
+set ttimeout
+set timeout timeoutlen=300 ttimeoutlen=300
+
 set noswapfile " No stupid .swp file
+set clipboard=unnamed " Yanks text into system clipboard
+set pastetoggle=<leader>p " Toggle paste and nopaste mode
+
+" Make VIM run fast even in large long lines files
+set synmaxcol=300
 
 nmap <Leader><CR> :nohlsearch<cr>
 
@@ -131,6 +154,10 @@ noremap   <Right>  <NOP>
 inoremap <C-e> <C-o>A
 
 " Buffer switching
-map <leader>p :bp<CR> " <Space> p previous buffer
-map <leader>n :bn<CR> " <Space> n next buffer
+map <leader>pb :bp<CR> " <Space> p previous buffer
+map <leader>nb :bn<CR> " <Space> n next buffer
+
+" Quickfix windows open and close
+map <Leader>qq :cclose<CR>
+map <Leader>qf :copen<CR>
 
