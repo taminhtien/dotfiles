@@ -98,3 +98,13 @@
 |zz|Center the current line within the window|
 |zt|Bring the current line to the top of the window|
 |zb|Bring the current line to the bottom of the window|
+
+#### Cut & Copy & Paste
+
+|Command|Operation|
+|---|---|
+|d|delte, Cut|
+|y|yank, Copy|
+|P|To paste before the cursor|
+|p|To paste after the cursor|
+

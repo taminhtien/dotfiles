@@ -82,7 +82,7 @@ colorscheme solarized
 nmap 0 ^
 
 " ve means vim edit
-nmap <leader>ve :edit $MYVIMRC<cr>
+nmap <leader>ve :vsplit $MYVIMRC<cr>
 
 " vr means vim reload
 nmap <leader>vr :source $MYVIMRC<cr>
@@ -151,11 +151,10 @@ noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
 
-inoremap <C-e> <C-o>A
+inoremap jk <C-o>A<Space>
 
 " Buffer switching
-map <leader>pb :bp<CR> " <Space> p previous buffer
-map <leader>nb :bn<CR> " <Space> n next buffer
+map <leader>p :bp<CR> " <Space> p previous buffer
 
 " Quickfix windows open and close
 map <Leader>qq :cclose<CR>
