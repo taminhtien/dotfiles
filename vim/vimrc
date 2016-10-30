@@ -1,4 +1,4 @@
-" map leader key to <Space> in stead of default is \
+
 let mapleader = "\<Space>"
 
 " Vundle set up
@@ -19,6 +19,7 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'Yggdroot/indentLine'
 Plugin 'ervandew/supertab'
 
 let g:rspec_command = "Dispatch rspec -I . --color -f p {spec}"
@@ -151,10 +152,10 @@ noremap   <Down>   <NOP>
 noremap   <Left>   <NOP>
 noremap   <Right>  <NOP>
 
-inoremap jk <C-o>A<Space>
+inoremap jk <C-o>A
 
 " Buffer switching
-map <leader>p :bp<CR> " <Space> p previous buffer
+map <leader>b :e#<CR> " open last opened file
 
 " Quickfix windows open and close
 map <Leader>qq :cclose<CR>
