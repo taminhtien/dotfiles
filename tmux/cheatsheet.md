@@ -11,3 +11,7 @@
 |tmux source-file ~/.tmux.conf|Reload the configuration|
 |<prefix>z|Toggle zoom pane|
 |<prefix> [|To start "copy-mode"|
+
+## Key bindings
+http://www.dayid.org/comp/tm.html
+
