@@ -34,8 +34,8 @@ let g:ctrlp_use_caching = 0
 " Plugin 'altercation/vim-colors-solarized'
 Plugin 'chriskempson/base16-vim'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
+Plugin 'MarcWeber/vim-addon-mw-utils' " Needed for vim-snipmate
+Plugin 'tomtom/tlib_vim' " Needed for vim-snipmate
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin '907th/vim-auto-save'
@@ -68,7 +68,32 @@ let g:NERDTreeMinimalUI = 1
 let g:NERDTreeAutoDeleteBuffer = 1
 let NERDTreeIgnore=['.git$', '\.swp$', '\.DS_Store$']
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plugin 'djoshea/vim-autoread'
 
+" JS plugins for VIM
+Plugin 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
+Plugin 'pangloss/vim-javascript'
+Plugin 'elzr/vim-json'
+let g:indentLine_noConcealCursor="" " Needed because of Yggdroot/indentLine
+Plugin 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint_d' " Faster syntax checking
+let g:syntastic_json_checkers=['jsonlint']
+let g:syntastic_error_symbol = '❌'
+let g:syntastic_style_error_symbol = '⁉️'
+let g:syntastic_warning_symbol = '⚠️'
+let g:syntastic_style_warning_symbol = '💩'
+" npm install -g eslint eslint-config-standard eslint-plugin-import eslint-plugin-promise eslint-plugin-react eslint-plugin-standard
+" Plugin 'alvan/vim-closetag'
+" let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js"
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -147,17 +172,10 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
-" Don't be a noob, join the no arrows key movement
-inoremap  <Up>     <NOP>
-inoremap  <Down>   <NOP>
-inoremap  <Left>   <NOP>
-inoremap  <Right>  <NOP>
-noremap   <Up>     <NOP>
-noremap   <Down>   <NOP>
-noremap   <Left>   <NOP>
-noremap   <Right>  <NOP>
-
-inoremap jk <C-o>A
+inoremap jk <C-o>a
+inoremap kj <C-o>A
+inoremap ;; <C-o>a;<C-o>h
+inoremap ,, <C-o>a,<CR><C-o>b<C-o>a
 
 " Buffer switching
 map <leader>b :e#<CR> " open last opened file
