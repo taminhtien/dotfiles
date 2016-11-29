@@ -107,4 +107,60 @@
 |y|yank, Copy|
 |P|To paste before the cursor|
 |p|To paste after the cursor|
+|yiw|Copy inner word|
 
+#### Tabs
+
+```gt``` move forward tabs
+```{number}gt``` go to tab {number}
+```gT``` move backward tabs
+```:tabe ./jsx.snippets``` open jsx.snippets in new tab
+```:tabm {number}``` move current tab to the {number} position
+```:tabm``` move current tab to the end position
+
+## Plugins
+
+### Vim Surround
+
+```ds"``` delete surround "
+```cs"'``` change " to '
+```ysiw"``` add " surround a word
+```cst<h2``` change current tag to <h2>
+
+### Vim Commentary
+
+```gcc, gcl``` comment the current line
+```gc{motion}``` comment with motion, for example gc2j, gcj
+```gcap``` comment a paragraph
+```gcgc``` undo a comment command
+```:7,17Commentary``` go comment from line 7 to line 17
+
+### ReplaceWithRegister
+
+```griw``` Go replace inner word
+```gr``` Paste the clipboard
+```grr``` Replace the whole line
+```{number}grr``` Replace the number of lines
+```gr$``` Replace from the cursor to the end of line
+```gr0``` Replace from the cursor to the begin of line
+
+### Vim TitleCase
+
+The <leader>gt mapping will wait for a text object or motion before completing the titlecase operation. This means <leader>gti' will titlecase inside of single quotes, <leader>gtap will titlecase a paragraph, etc. gt will also work on a visual selection.
+In addition, <leader>gT will titlecase the current line.
+
+### Vim SortMotion
+
+```gs2j``` Sort down two lines (current + 2 below)
+```gsip``` Sort the current paragraph
+```gsii``` Sort the current indentation level
+```gsi(``` Sort within parenthesis. (b, c, a) would become (a, b, c)
+```gs``` Sort the selection
+
+### Vim SystemCopy
+```cpiw``` Copy word into system clipboard
+```cpi'``` Copy inside single quotes to system clipboard
+```cP``` Copy the current line directly
+```cv``` Paste the content of system clipboard to the next line
+
+### Indent Text Object

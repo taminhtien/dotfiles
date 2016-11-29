@@ -1,4 +1,3 @@
-
 let mapleader = "\<Space>"
 
 " Vundle set up
@@ -19,8 +18,27 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'jiangmiao/auto-pairs'
+let g:AutoPairsShortcutToggle = '<C-a>'
+let g:AutoPairsShortcutFastWrap = '<C-w>'
+let g:AutoPairsShortcutBackInsert = '<C-b>'
+let g:AutoPairsFlyMode = 1
+
 Plugin 'Yggdroot/indentLine'
 Plugin 'ervandew/supertab'
+Plugin 'vim-scripts/ReplaceWithRegister'
+Plugin 'christoomey/vim-titlecase'
+let g:titlecase_map_keys = 0
+nmap <leader>gt <Plug>Titlecase
+vmap <leader>gt <Plug>Titlecase
+nmap <leader>gT <Plug>TitlecaseLine
+
+Plugin 'kana/vim-textobj-user'
+Plugin 'kana/vim-textobj-indent'
+Plugin 'kana/vim-textobj-line'
+Plugin 'kana/vim-textobj-entire'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'christoomey/vim-sort-motion'
+Plugin 'christoomey/vim-system-copy'
 
 let g:rspec_command = "Dispatch rspec -I . --color -f p {spec}"
 
@@ -65,7 +83,7 @@ Plugin 'scrooloose/nerdtree'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeAutoDeleteBuffer = 1
-let NERDTreeIgnore=['.git$', '\.swp$', '\.DS_Store$']
+let NERDTreeIgnore=['.git$', 'node_modules', '\.swp$', '\.DS_Store$']
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'djoshea/vim-autoread'
 
@@ -80,6 +98,7 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
@@ -90,9 +109,12 @@ let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_error_symbol = '⁉️'
 let g:syntastic_warning_symbol = '⚠️'
 let g:syntastic_style_warning_symbol = '💩'
+highlight link SyntasticErrorSign SignColumn
+highlight link SyntasticWarningSign SignColumn
+highlight link SyntasticStyleErrorSign SignColumn
+highlight link SyntasticStyleWarningSign SignColumn
 " npm install -g eslint eslint-config-standard eslint-plugin-import eslint-plugin-promise eslint-plugin-react eslint-plugin-standard
-" Plugin 'alvan/vim-closetag'
-" let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.js"
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -102,28 +124,25 @@ syntax enable
 set background=light
 colorscheme solarized
 
-" Vim mappings and settings
-
-" nmap means nomal mode mapping, in nomal mode, map ^ to 0 to easy access to the start of the line
+" Map 0 to move cursor to first character of line
 nmap 0 ^
 
-" ve means vim edit
+" Edit Vim
 nmap <leader>ve :vsplit $MYVIMRC<cr>
 
-" vr means vim reload
-nmap <leader>vr :source $MYVIMRC<cr>
+" Open cheatsheet
+nmap <leader>cs :vsplit ~/workspace/dotfiles/vim/cheatsheet.md<cr>
 
-" opens NerdTree
+" Opens NerdTree
 nmap <leader>n :NERDTreeToggle<CR>
-
-" Shift-Enter to escape in Insert Mode
-inoremap ✠ <Esc>
 
 " Navigation around windows
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
+
+runtime macros/matchit.vim
 
 set encoding=utf-8
 set number
@@ -158,7 +177,7 @@ set pastetoggle=<leader>p " Toggle paste and nopaste mode
 " Make VIM run fast even in large long lines files
 set synmaxcol=300
 
-nmap <Leader><CR> :nohlsearch<cr>
+nmap <Leader>/ :nohlsearch<CR>
 
 " RSpec.vim mappings
 
@@ -167,15 +186,52 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
+" Code format entire file
+map <Leader>= ggVG=
+
 inoremap jk <C-o>a
 inoremap kj <C-o>A
-inoremap ;; <C-o>a;<C-o>h
-inoremap ,, <C-o>a,<CR><C-o>b<C-o>a
 
-" Buffer switching
-map <leader>b :e#<CR> " open last opened file
+" Open buffet list
+map <Leader>b :Bufferlist<cr>
 
 " Quickfix windows open and close
 map <Leader>qq :cclose<CR>
 map <Leader>qf :copen<CR>
 
+" Split lines above
+map <Leader>K i<cr><esc><up>:m +1<cr>
+
+" Split lines below
+map <Leader>k i<cr><esc>"
+
+" Closes current buffet
+map <Leader>x :Bdelete<cr>
+
+" Close the next window
+map <Leader>X <c-w><c-w>:q<CR>
+
+" Reloads $MYVIMRC
+map <Leader>r :so $MYVIMRC<cr>
+
+" Insert a line break above
+nmap K 0i<cr><esc>
+
+" Navigate around methods
+nmap gm ]m
+nmap gn [m
+
+nnoremap <D-C-Up> V:move '<-2<CR><Esc>
+nnoremap <D-C-Down> V:move '>+1<CR><Esc>
+vnoremap <D-C-Up> :move '<-2<CR>gv
+vnoremap <D-C-Down> :move '>+1<CR>gv
+
+" Auto-expand %% to the current file directory
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%']"
+
+" Wild ignore all node modules
+set wildignore+=node_modules
+
+" Faster redraws in terminal Vim ?
+set lazyredraw
+set ttyfast
