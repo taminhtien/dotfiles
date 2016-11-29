@@ -158,6 +158,7 @@ In addition, <leader>gT will titlecase the current line.
 ```gs``` Sort the selection
 
 ### Vim SystemCopy
+
 ```cpiw``` Copy word into system clipboard
 ```cpi'``` Copy inside single quotes to system clipboard
 ```cP``` Copy the current line directly
