@@ -18,10 +18,9 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'jiangmiao/auto-pairs'
-let g:AutoPairsShortcutToggle = '<C-a>'
 let g:AutoPairsShortcutFastWrap = '<C-w>'
 let g:AutoPairsShortcutBackInsert = '<C-b>'
-let g:AutoPairsFlyMode = 1
+let g:AutoPairsFlyMode = 0
 
 Plugin 'Yggdroot/indentLine'
 Plugin 'ervandew/supertab'
@@ -32,6 +31,8 @@ nmap <leader>gt <Plug>Titlecase
 vmap <leader>gt <Plug>Titlecase
 nmap <leader>gT <Plug>TitlecaseLine
 
+Plugin 'rking/ag.vim'
+Plugin 'Chun-Yang/vim-action-ag'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-indent'
 Plugin 'kana/vim-textobj-line'
@@ -86,6 +87,8 @@ let g:NERDTreeAutoDeleteBuffer = 1
 let NERDTreeIgnore=['.git$', 'node_modules', '\.swp$', '\.DS_Store$']
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'djoshea/vim-autoread'
+Plugin 'sandeepcr529/Buffet.vim'
+Plugin 'skwp/greplace.vim'
 
 " JS plugins for VIM
 Plugin 'mxw/vim-jsx'
