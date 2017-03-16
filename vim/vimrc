@@ -25,12 +25,7 @@ let g:AutoPairsFlyMode = 0
 Plugin 'Yggdroot/indentLine'
 Plugin 'ervandew/supertab'
 Plugin 'vim-scripts/ReplaceWithRegister'
-Plugin 'christoomey/vim-titlecase'
-let g:titlecase_map_keys = 0
-nmap <leader>gt <Plug>Titlecase
-vmap <leader>gt <Plug>Titlecase
-nmap <leader>gT <Plug>TitlecaseLine
-
+Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'rking/ag.vim'
 Plugin 'Chun-Yang/vim-action-ag'
 Plugin 'kana/vim-textobj-user'
@@ -38,24 +33,9 @@ Plugin 'kana/vim-textobj-indent'
 Plugin 'kana/vim-textobj-line'
 Plugin 'kana/vim-textobj-entire'
 Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'christoomey/vim-sort-motion'
-Plugin 'christoomey/vim-system-copy'
-Plugin 'bkad/CamelCaseMotion'
-
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-map <silent> ge <Plug>CamelCaseMotion_ge
-sunmap w
-sunmap b
-sunmap e
-sunmap ge
-omap <silent> iw <Plug>CamelCaseMotion_iw
-xmap <silent> iw <Plug>CamelCaseMotion_iw
-omap <silent> ib <Plug>CamelCaseMotion_ib
-xmap <silent> ib <Plug>CamelCaseMotion_ib
-omap <silent> ie <Plug>CamelCaseMotion_ie
-xmap <silent> ie <Plug>CamelCaseMotion_ie
+Plugin 'tpope/vim-unimpaired'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'itchyny/lightline.vim'
 
 let g:rspec_command = "Dispatch rspec -I . --color -f p {spec}"
 
@@ -67,40 +47,52 @@ let g:ctrlp_user_command = 'ag %s -l --hidden --nocolor -g ""'
 let g:ctrlp_use_caching = 0
 
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'joshdick/onedark.vim'
 Plugin 'vim-ruby/vim-ruby'
+
 Plugin '907th/vim-auto-save'
 let g:auto_save = 1
+
 Plugin 'slim-template/vim-slim.git'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 
-let g:airline_powerline_fonts = 1
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
 
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+" let g:airline_powerline_fonts = 1
 
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.maxlinenr = '☰'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.spell = 'Ꞩ'
-let g:airline_symbols.notexists = '∄'
-let g:airline_symbols.whitespace = 'Ξ'
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.crypt = '🔒'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.maxlinenr = '☰'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.spell = 'Ꞩ'
+" let g:airline_symbols.notexists = '∄'
+" let g:airline_symbols.whitespace = 'Ξ'
 
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeAutoDeleteBuffer = 1
 let NERDTreeIgnore=['.git$', 'node_modules', '\.swp$', '\.DS_Store$']
+
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'djoshea/vim-autoread'
 Plugin 'sandeepcr529/Buffet.vim'
 Plugin 'skwp/greplace.vim'
+Plugin 'dracula/vim'
+
+Plugin 'majutsushi/tagbar'
+" Leader m to trigger
+
+Plugin 'mattn/emmet-vim'
+" <C-Y>, to trigger
 
 " JS plugins for VIM
 Plugin 'mxw/vim-jsx'
@@ -134,10 +126,25 @@ highlight link SyntasticStyleWarningSign SignColumn
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-set t_Co=256
-syntax enable
-set background=light
-colorscheme solarized
+" if !has('gui_running')
+"   set t_Co=256
+" endif
+
+if (has("autocmd") && !has("gui"))
+  let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+  autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " No `bg` setting
+end
+
+if has('nvim')
+  nmap <BS> <C-W>h
+endif
+
+let g:onedark_termcolors=16
+
+syntax on
+colorscheme onedark
+" set background=dark
+" color dracula
 
 " Map 0 to move cursor to first character of line
 nmap 0 ^
@@ -160,6 +167,8 @@ nnoremap <C-K> <C-W><C-K>
 runtime macros/matchit.vim
 
 set encoding=utf-8
+scriptencoding utf-8
+set mouse=a
 set number
 set wildmenu
 set wildmode=full
@@ -178,6 +187,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set cursorline
+set autoindent
 set laststatus=2
 set formatoptions-=or " Don't add the comment prefix when I hit enter or o/O on a comment line."
 
@@ -210,6 +220,9 @@ inoremap kj <C-o>A
 " Open buffet list
 map <Leader>b :Bufferlist<cr>
 
+" Opens Tagbar
+map <Leader>m :TagbarToggle<CR>
+
 " Quickfix windows open and close
 map <Leader>qq :cclose<CR>
 map <Leader>qf :copen<CR>
@@ -220,8 +233,8 @@ map <Leader>K i<cr><esc><up>:m +1<cr>
 " Split lines below
 map <Leader>k i<cr><esc>"
 
-" Closes current buffet
-map <Leader>x :Bdelete<cr>
+" Delete all buffers but leave the current
+map <Leader>x :BufOnly<cr>
 
 " Close the next window
 map <Leader>X <c-w><c-w>:q<CR>
@@ -236,11 +249,6 @@ nmap K 0i<cr><esc>
 nmap gm ]m
 nmap gn [m
 
-nnoremap <D-C-Up> V:move '<-2<CR><Esc>
-nnoremap <D-C-Down> V:move '>+1<CR><Esc>
-vnoremap <D-C-Up> :move '<-2<CR>gv
-vnoremap <D-C-Down> :move '>+1<CR>gv
-
 " Auto-expand %% to the current file directory
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%']"
 
@@ -250,3 +258,135 @@ set wildignore+=node_modules
 " Faster redraws in terminal Vim ?
 set lazyredraw
 set ttyfast
+
+" find . -type f -iregex ".*\.js$" -not -path "./node_modules/*" -exec jsctags {} -f \; | sed '/^$/d' | sort > tags
+
+let g:lightline = {
+      \ 'colorscheme': 'onedark',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive',
+      \   'filename': 'LightlineFilename',
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype',
+      \   'fileencoding': 'LightlineFileencoding',
+      \   'mode': 'LightlineMode',
+      \   'ctrlpmark': 'CtrlPMark',
+      \ },
+      \ 'component_expand': {
+      \   'syntastic': 'SyntasticStatuslineFlag',
+      \ },
+      \ 'component_type': {
+      \   'syntastic': 'error',
+      \ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+      \ }
+
+function! LightlineModified()
+  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help' && &readonly ? "\ue0a2" : ''
+endfunction
+
+function! LightlineFilename()
+  let fname = expand('%:t')
+  return fname == 'ControlP' && has_key(g:lightline, 'ctrlp_item') ? g:lightline.ctrlp_item :
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft == 'unite' ? unite#get_status_string() :
+        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlineFugitive()
+  try
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      let mark = "\ue0a0"  " edit here for cool mark
+      let branch = fugitive#head()
+      return branch !=# '' ? mark.branch : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineMode()
+  let fname = expand('%:t')
+  return fname == '__Tagbar__' ? 'Tagbar' :
+        \ fname == 'ControlP' ? 'CtrlP' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! CtrlPMark()
+  if expand('%:t') =~ 'ControlP' && has_key(g:lightline, 'ctrlp_item')
+    call lightline#link('iR'[g:lightline.ctrlp_regex])
+    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
+          \ , g:lightline.ctrlp_next], 0)
+  else
+    return ''
+  endif
+endfunction
+
+let g:ctrlp_status_func = {
+  \ 'main': 'CtrlPStatusFunc_1',
+  \ 'prog': 'CtrlPStatusFunc_2',
+  \ }
+
+function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
+  let g:lightline.ctrlp_regex = a:regex
+  let g:lightline.ctrlp_prev = a:prev
+  let g:lightline.ctrlp_item = a:item
+  let g:lightline.ctrlp_next = a:next
+  return lightline#statusline(0)
+endfunction
+
+function! CtrlPStatusFunc_2(str)
+  return lightline#statusline(0)
+endfunction
+
+let g:tagbar_status_func = 'TagbarStatusFunc'
+
+function! TagbarStatusFunc(current, sort, fname, ...) abort
+    let g:lightline.fname = a:fname
+  return lightline#statusline(0)
+endfunction
+
+augroup AutoSyntastic
+  autocmd!
+  autocmd BufWritePost *.c,*.cpp call s:syntastic()
+augroup END
+function! s:syntastic()
+  SyntasticCheck
+  call lightline#update()
+endfunction
+
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
