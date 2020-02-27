@@ -207,3 +207,6 @@ function rz() { source ~/.zshrc }
 # Rails functions
 # rake routes
 function rr() { bundle exec rake routes | grep $1 }
+
+# tail -f
+function tf() { tail -f $1 }
