@@ -383,7 +383,8 @@ map <Leader>vz :VimuxZoomRunner<CR>
 " MAPPING FZF
 "========================================================
 nnoremap <c-o> <ESC>:Tags<CR>
-nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
+" nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
+nnoremap <c-p> <ESC>:call fzf#vim#files('.')<CR>
 nnoremap <c-g> <ESC>:Rg<space>
 nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'})<cr>
 nnoremap <silent> <leader>mm <ESC>:Commands<CR>
@@ -396,7 +397,8 @@ nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>ga :BCommits<CR>
 let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
 let $FZF_DEFAULT_COMMAND = 'rg --files  --hidden --follow --glob "!{.git, node_modules}"'
-let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+" No need preview
+" let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
@@ -420,8 +422,8 @@ function! SearchVisualSelectionWithRg() range
 endfunction
 
 let g:fzf_prefer_tmux = 1
-let g:fzf_layout = { 'down': '~100%' }
-" let g:fzf_layout = { 'window': '10new' }
+" let g:fzf_layout = { 'down': '~100%' }
+let g:fzf_layout = { 'window': '10new' }
 " let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 "========================================================
 " MISC MAPPING
