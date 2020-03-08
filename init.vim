@@ -423,8 +423,8 @@ endfunction
 
 let g:fzf_prefer_tmux = 1
 " let g:fzf_layout = { 'down': '~100%' }
-let g:fzf_layout = { 'window': '10new' }
-" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+" let g:fzf_layout = { 'window': '10new' }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 "========================================================
 " MISC MAPPING
 "========================================================
