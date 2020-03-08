@@ -32,7 +32,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-" Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-endwise'
 Plug 'mbbill/undotree'
 Plug 'janko-m/vim-test'
@@ -47,8 +47,11 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'Shougo/neosnippet-snippets'
 Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
+Plug 'haya14busa/incsearch.vim'
 Plug 'uarun/vim-protobuf'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+" Plug 'Shougo/denite.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc-denite'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-cucumber'
@@ -61,7 +64,6 @@ Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-projectionist'
 Plug 'mhinz/vim-signify'
 Plug 'itchyny/lightline.vim'
-Plug 'schickling/vim-bufon'
 Plug 'sheerun/vim-polyglot'
 Plug 'rhysd/clever-f.vim'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -142,28 +144,56 @@ highlight SignColumn guibg=255
 "========================================================
 call camelcasemotion#CreateMotionMappings('<leader>')
 "========================================================
+" CONFIG VIM EASYMOTION
+"========================================================
+" Vim easymotion
+nmap <silent> ;; <Plug>(easymotion-overwin-f)
+nmap <silent> ;l <Plug>(easymotion-overwin-line)
+"========================================================
 " CONFIG CLEVER F
 "========================================================
 let g:clever_f_across_no_line = 1
 "========================================================
+" CONFIG INCSEARCH
+"========================================================
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+"========================================================
+" CONFIG AUTO PAIRS
+"========================================================
+let g:AutoPairsShortcutFastWrap = '<C->>'
+let g:AutoPairsShortcutBakkInsert = '<C-<>'
+let g:AutoPairsFlyMode = 1
+"========================================================
 " CONFIG COC NVIM
 "========================================================
 set updatetime=300
+" https://stackoverflow.com/questions/19580157/to-hide-user-defined-completion-message-at-vim
 set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:coc_global_extensions = ['coc-solargraph']
+let g:coc_global_extensions = [
+  \ 'coc-solargraph',
+  \ 'coc-tsserver',
+  \ 'coc-snippets' ]
 
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
 noremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -173,6 +203,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> cs <Plug>(coc-search)
 nnoremap <silent> sd :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if &filetype == 'vim'
@@ -206,6 +237,171 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` for fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+endfunction
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{StatusDiagnostic()}
+"========================================================
+" CONFIG DENITE
+"========================================================
+" call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
+" call denite#custom#var('grep', 'command', ['rg'])
+" call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
+" call denite#custom#var('grep', 'recursive_opts', [])
+" call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+" call denite#custom#var('grep', 'separator', ['--'])
+" call denite#custom#var('grep', 'final_opts', [])
+" call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
+" call denite#custom#option('_', 'max_dynamic_update_candidates', 100000)
+" call denite#custom#var('outline', 'command', ['ctags'])
+" " Tell ctags write tags to stdin, so Denite can pick it up
+" call denite#custom#var('outline', 'options', ['-f -', '--excmd=number'])
+"
+" let s:denite_options = {
+"       \ 'prompt' : '',
+"       \ 'split': 'floating',
+"       \ 'start_filter': 1,
+"       \ 'auto_resize': 1,
+"       \ 'source_names': 'short',
+"       \ 'direction': 'botright',
+"       \ 'statusline': 0,
+"       \ 'cursorline': 0,
+"       \ 'highlight_matched_char': 'WildMenu',
+"       \ 'highlight_matched_range': 'WildMenu',
+"       \ 'highlight_window_background': 'Visual',
+"       \ 'highlight_filter_background': 'CocListMagentaGray',
+"       \ 'highlight_preview_line': 'Cursor',
+"       \ 'vertical_preview': 1
+"       \ }
+"
+" call denite#custom#option('default', s:denite_options)
+"
+" autocmd FileType denite call s:denite_my_settings()
+" function! s:denite_my_settings() abort
+"     nnoremap <silent><buffer><expr> <CR>
+"                 \ denite#do_map('do_action')
+"     nnoremap <silent><buffer><expr> d
+"                 \ denite#do_map('do_action', 'delete')
+"     nnoremap <silent><buffer><expr> <c-p>
+"                 \ denite#do_map('do_action', 'preview')
+"     nnoremap <silent><buffer><expr> q
+"                 \ denite#do_map('quit')
+"     nnoremap <silent><buffer><expr> i
+"                 \ denite#do_map('open_filter_buffer')
+"     nnoremap <silent><buffer><expr> <c-a>
+"                 \ denite#do_map('toggle_select_all')
+"     nnoremap <silent><buffer><expr> <c-t>
+"                 \ denite#do_map('toggle_select').'j'
+" endfunction
+"
+" autocmd FileType denite-filter call s:denite_filter_my_settings()
+" function! s:denite_filter_my_settings() abort
+"     imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
+"     inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+"     inoremap <silent><buffer><expr> <c-a>
+"                 \ denite#do_map('toggle_select_all')
+"     inoremap <silent><buffer><expr> <c-t>
+"                 \ denite#do_map('toggle_select')
+"     inoremap <silent><buffer><expr> <c-o>
+"                 \ denite#do_map('do_action', 'quickfix')
+"     inoremap <silent><buffer><expr> <esc>
+"                 \ denite#do_map('quit')
+"     inoremap <silent><buffer> <C-j>
+"                 \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+"     inoremap <silent><buffer> <C-k>
+"                 \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+" endfunction
+"
+" nnoremap \ :Denite grep<CR>
+" nnoremap <Leader>pf :Denite file/rec<CR>
+" nnoremap <Leader>pr :Denite file/old buffer<CR>
+" nnoremap <C-o> :Denite outline<CR>
+" map * :Denite -resume -refresh<CR>
+"
+" " Some custom style
+" highlight Normal guibg=NONE
+" highlight EasyMotionTargetDefault guifg=#ffb400
+" highlight NonText guifg=#354751
+" highlight VertSplit guifg=#212C32
+" highlight link deniteSource_SymbolsName Symbol
+" highlight link deniteSource_SymbolsHeader String
+" highlight link deniteSource_grepLineNR deniteSource_grepFile
+" highlight WildMenu guibg=NONE guifg=#87bb7c
+" highlight CursorLineNr guibg=NONE
+"========================================================
+" FLOATING TERMINAL
+"========================================================
+let s:float_term_border_win = 0
+let s:float_term_win = 0
+function! FloatTerm(...)
+  " Configuration
+  let height = float2nr((&lines - 2) * 0.6)
+  let row = float2nr((&lines - height) / 2)
+  let width = float2nr(&columns * 0.6)
+  let col = float2nr((&columns - width) / 2)
+  " Border Window
+  let border_opts = {
+        \ 'relative': 'editor',
+        \ 'row': row - 1,
+        \ 'col': col - 2,
+        \ 'width': width + 4,
+        \ 'height': height + 2,
+        \ 'style': 'minimal'
+        \ }
+  " Terminal Window
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': row,
+        \ 'col': col,
+        \ 'width': width,
+        \ 'height': height,
+        \ 'style': 'minimal'
+        \ }
+  let top = "╭" . repeat("─", width + 2) . "╮"
+  let mid = "│" . repeat(" ", width + 2) . "│"
+  let bot = "╰" . repeat("─", width + 2) . "╯"
+  let lines = [top] + repeat([mid], height) + [bot]
+  let bbuf = nvim_create_buf(v:false, v:true)
+  call nvim_buf_set_lines(bbuf, 0, -1, v:true, lines)
+  let s:float_term_border_win = nvim_open_win(bbuf, v:true, border_opts)
+  let buf = nvim_create_buf(v:false, v:true)
+  let s:float_term_win = nvim_open_win(buf, v:true, opts)
+  " Styling
+  call setwinvar(s:float_term_border_win, '&winhl', 'Normal:Normal')
+  call setwinvar(s:float_term_win, '&winhl', 'Normal:Normal')
+  if a:0 == 0
+    terminal
+  else
+    call termopen(a:1)
+  endif
+  startinsert
+  " Close border window when terminal window close
+  autocmd TermClose * ++once :bd! | call nvim_win_close(s:float_term_border_win, v:true)
+endfunction
+
+" Open terminal
+nnoremap <Leader>at :call FloatTerm()<CR>
+" Open node REPL
+nnoremap <Leader>an :call FloatTerm('"node"')<CR>
+" Open tig, yes TIG, A FLOATING TIGGGG!!!!!!
+nnoremap <Leader>ag :call FloatTerm('"tig"')<CR>
+"========================================================
+" CONFIG NERDTree
+"========================================================
+" Find the current file in the tree
+nmap ;n :NERDTreeFind<CR>
 "========================================================
 " CONFIG DEOPLETE
 "========================================================
@@ -226,76 +422,129 @@ endfunction "}}}
 "========================================================
 " CONFIG LIGHTLINE
 "========================================================
+" let g:lightline = {
+"       \ 'colorscheme': 'tender',
+"       \ 'active': {
+"       \   'left': [ ['mode', 'paste'], ['readonly', 'modified', 'gitbranch', 'filename'] ],
+"       \   'right': [ ['lineinfo'], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+"       \ },
+"       \ 'component_function': {
+"       \   'filename': 'LightlineFilename',
+"       \   'gitbranch': 'fugitive#head',
+"       \   'percent': 'MyLightLinePercent',
+"       \   'lineinfo': 'MyLightLineLineInfo',
+"       \   'fileformat': 'LightlineFileformat',
+"       \   'filetype': 'LightlineFiletype',
+"       \   'modified': 'MyLightLineSignify'
+"       \ },
+"       \ }
 let g:lightline = {
       \ 'colorscheme': 'tender',
       \ 'active': {
-      \   'left': [ ['mode', 'paste'], ['readonly', 'modified', 'gitbranch', 'filename'] ],
-      \   'right': [ ['lineinfo'], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+      \   'left': [ ['fileicon'], [ 'cocstatus' ], [ 'filename' ] ],
+      \   'right': [ [ 'icongitbranch' ], [ 'lineinfo' ] ]
       \ },
+      \ 'inactive': {
+      \   'left': [ [], ['fileicon'], [ 'filename' ] ],
+      \   'right': []
+      \ },
+      \ 'component': { 'lineinfo': ' %2p%% %3l:%-2v' },
       \ 'component_function': {
-      \   'filename': 'LightlineFilename',
+      \   'fileicon': 'MyFiletype',
+      \   'icongitbranch': 'DrawGitBranchInfo',
+      \   'iconline': 'DrawLineInfo',
       \   'gitbranch': 'fugitive#head',
-      \   'percent': 'MyLightLinePercent',
-      \   'lineinfo': 'MyLightLineLineInfo',
-      \   'fileformat': 'LightlineFileformat',
-      \   'filetype': 'LightlineFiletype',
-      \   'modified': 'MyLightLineSignify'
+      \   'cocstatus': 'coc#status',
+      \   'filename': 'LightLineFilename',
       \ },
       \ }
+
+" Use auocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
 let g:tcd_blacklist = '\v(cheat40|denite|gundo|help|nerdtree|netrw|peekaboo|quickmenu|startify|tagbar|undotree|unite|vimfiler|vimshell|fzf)'
-function! LightlineFileformat()
-  return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? &fileformat : ''
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''
 endfunction
-function! LightlineFiletype()
-  return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? &ft : ''
+
+function! DrawGitBranchInfo()
+  let branch = fugitive#head()
+  return len(branch) > 0 ? " " . branch : ""
 endfunction
-function! Devicon()
-  return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? (WebDevIconsGetFileTypeSymbol()) : ''
-endfunction
-function! LightlineFilename()
-  let root = fnamemodify(get(b:, 'git_dir'), ':h')
-  let path = expand('%:p')
-  if path[:len(root)-1] ==# root && winwidth(0) > 40
-    return &filetype !~# g:tcd_blacklist ? path[len(root)+1:] : ''
-  elseif path[:len(root)-1] ==# root && winwidth(0) <= 40
-    return &filetype !~# g:tcd_blacklist ? expand('%:t') : ''
-  endif
-  return &filetype !~# g:tcd_blacklist && winwidth(0) > 70 ? expand('%') : &filetype
-endfunction
-function! MyLightLinePercent()
-  if &ft !~# g:tcd_blacklist && winwidth(0) > 70
-    return line('.') * 100 / line('$') . '%'
-  else
-    return ''
-  endif
-endfunction
-function! MyLightLineLineInfo()
-  if &ft !~# g:tcd_blacklist
-    return line('.').':'. col('.')
-  else
-    return ''
-  endif
-endfunction
-function! MyLightLineSignify()
-  let [added, modified, removed] = sy#repo#get_stats()
-  let l:sy = ''
-  for [flag, flagcount] in [
-        \   [exists("g:signify_sign_add")?g:signify_sign_add:'+', added],
-        \   [exists("g:signify_sign_delete")?g:signify_sign_delete:'-', removed],
-        \   [exists("g:signify_sign_change")?g:signify_sign_change:'!', modified]
-        \ ]
-    if flagcount> 0
-      let l:sy .= printf('%s%d', flag, flagcount)
+
+function! LightLineFilename()
+  let name = ""
+  let subs = split(expand('%'), "/")
+  let i = 1
+  for s in subs
+    let parent = name
+    if  i == len(subs)
+      let name = len(parent) > 0 ? parent . '/' . s : s
+    elseif i == 1
+      let name = s
+    else
+      let part = strpart(s, 0, 10)
+      let name = len(parent) > 0 ? parent . '/' . part : part
     endif
+    let i += 1
   endfor
-  if !empty(l:sy) && &ft !~# g:tcd_blacklist
-    let l:sy = printf('[%s]', l:sy)
-    let l:sy_vcs = get(b:sy, 'updated_by', '???')
-    return printf('%s%s', l:sy_vcs, l:sy)
-  else
-    return ''
-  endif
+  return name
 endfunction
+
+" function! LightlineFileformat()
+"   return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? &fileformat : ''
+" endfunction
+" function! LightlineFiletype()
+"   return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? &ft : ''
+" endfunction
+" function! Devicon()
+"   return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? (WebDevIconsGetFileTypeSymbol()) : ''
+" endfunction
+" function! LightlineFilename()
+"   let root = fnamemodify(get(b:, 'git_dir'), ':h')
+"   let path = expand('%:p')
+"   if path[:len(root)-1] ==# root && winwidth(0) > 40
+"     return &filetype !~# g:tcd_blacklist ? path[len(root)+1:] : ''
+"   elseif path[:len(root)-1] ==# root && winwidth(0) <= 40
+"     return &filetype !~# g:tcd_blacklist ? expand('%:t') : ''
+"   endif
+"   return &filetype !~# g:tcd_blacklist && winwidth(0) > 70 ? expand('%') : &filetype
+" endfunction
+" function! MyLightLinePercent()
+"   if &ft !~# g:tcd_blacklist && winwidth(0) > 70
+"     return line('.') * 100 / line('$') . '%'
+"   else
+"     return ''
+"   endif
+" endfunction
+" function! MyLightLineLineInfo()
+"   if &ft !~# g:tcd_blacklist
+"     return line('.').':'. col('.')
+"   else
+"     return ''
+"   endif
+" endfunction
+" function! MyLightLineSignify()
+"   let [added, modified, removed] = sy#repo#get_stats()
+"   let l:sy = ''
+"   for [flag, flagcount] in [
+"         \   [exists("g:signify_sign_add")?g:signify_sign_add:'+', added],
+"         \   [exists("g:signify_sign_delete")?g:signify_sign_delete:'-', removed],
+"         \   [exists("g:signify_sign_change")?g:signify_sign_change:'!', modified]
+"         \ ]
+"     if flagcount> 0
+"       let l:sy .= printf('%s%d', flag, flagcount)
+"     endif
+"   endfor
+"   if !empty(l:sy) && &ft !~# g:tcd_blacklist
+"     let l:sy = printf('[%s]', l:sy)
+"     let l:sy_vcs = get(b:sy, 'updated_by', '???')
+"     return printf('%s%s', l:sy_vcs, l:sy)
+"   else
+"     return ''
+"   endif
+" endfunction
 "========================================================
 " CONFIG MIRROR VIM
 "========================================================
@@ -390,7 +639,7 @@ nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'}
 nnoremap <silent> <leader>mm <ESC>:Commands<CR>
 nnoremap <silent> <leader>? :History<CR>
 nnoremap <silent> <leader>A :Windows<CR>
-nnoremap <silent> <leader>a :Buffers<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> K :call SearchWordWithRg()<CR>
 vnoremap <silent> K :call SearchVisualSelectionWithRg()<CR>
 nnoremap <silent> <leader>gl :Commits<CR>
@@ -513,7 +762,7 @@ endfunction
 "========================================================
 " VIM AUTO SAVE
 "========================================================
-let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save = 0  " enable AutoSave on Vim startup
 let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 
 "========================================================
@@ -555,14 +804,14 @@ vmap <C-c> "*y
 " Select all text
 nmap <C-y> ggVG
 
+" Duplicate everything selected
+vmap D y'>p
+
+" Remove search highlight
+nnoremap <ESC><ESC> :nohlsearch<CR>
+
 " Switch between the last two files
 nnoremap <Leader><Leader> <C-^>
-
-" Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
 
 " Quicker window movement
 " nnoremap <C-j> <C-w>j
@@ -578,11 +827,14 @@ set foldlevelstart=20
 noremap Zz <c-w>_ \| <c-w>\|
 noremap Zo <c-w>=
 
+" I don't use recording, don't judge me
+map q <Nop>
+
 " Moving cursor in insert mode
-inoremap <C-h> <Left>
+inoremap <C-b> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+inoremap <C-f> <Right>
 
 " vim key mapping
 nmap <C-e> A<ESC>
@@ -597,3 +849,8 @@ inoremap jk <ESC>
 " Map 0 to move cursor to first character of line
 nmap 0 ^
 
+" Reloads $MYVIMRC
+map <Leader>r :so $MYVIMRC<cr>
+
+" Edit Vim
+nmap <leader>ve :vsplit $MYVIMRC<cr>
