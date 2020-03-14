@@ -147,9 +147,9 @@ call camelcasemotion#CreateMotionMappings('<leader>')
 " CONFIG VIM EASYMOTION
 "========================================================
 " Vim easymotion
-nmap <silent> ;; <Plug>(easymotion-overwin-f)
+" nmap <silent> ;; <Plug>(easymotion-overwin-f)
 nmap <silent> ;l <Plug>(easymotion-overwin-line)
-"========================================================
+" "========================================================
 " CONFIG CLEVER F
 "========================================================
 let g:clever_f_across_no_line = 1
@@ -396,12 +396,12 @@ nnoremap <Leader>at :call FloatTerm()<CR>
 " Open node REPL
 nnoremap <Leader>an :call FloatTerm('"node"')<CR>
 " Open tig, yes TIG, A FLOATING TIGGGG!!!!!!
-nnoremap <Leader>ag :call FloatTerm('"tig"')<CR>
+" nnoremap <Leader>ag :call FloatTerm('"tig"')<CR>
 "========================================================
 " CONFIG NERDTree
 "========================================================
 " Find the current file in the tree
-nmap ;n :NERDTreeFind<CR>
+" nmap ;n :NERDTreeFind<CR>
 "========================================================
 " CONFIG DEOPLETE
 "========================================================
