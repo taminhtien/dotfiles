@@ -25,6 +25,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/vim-auto-save'
+Plug 'christoomey/vim-tmux-navigator'
 " Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-rails'
 Plug 'jiangmiao/auto-pairs'
@@ -32,14 +33,14 @@ Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-endwise'
 Plug 'mbbill/undotree'
 Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-rhubarb'
-Plug 'matze/vim-move'
+" Plug 'matze/vim-move'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './instalL --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -164,7 +165,7 @@ map g/ <Plug>(incsearch-stay)
 "========================================================
 let g:AutoPairsShortcutFastWrap = '<C->>'
 let g:AutoPairsShortcutBakkInsert = '<C-<>'
-let g:AutoPairsFlyMode = 1
+let g:AutoPairsFlyMode = 0
 "========================================================
 " CONFIG COC NVIM
 "========================================================
@@ -187,7 +188,6 @@ endfunction
 
 let g:coc_global_extensions = [
   \ 'coc-solargraph',
-  \ 'coc-tsserver',
   \ 'coc-snippets' ]
 
 " Use <c-space> for trigger completion.
@@ -203,7 +203,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> cs <Plug>(coc-search)
+" nmap <silent> cs <Plug>(coc-search)
 nnoremap <silent> sd :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if &filetype == 'vim'
@@ -365,8 +365,8 @@ function! FloatTerm(...)
         \ 'relative': 'editor',
         \ 'row': row,
         \ 'col': col,
-        \ 'width': width,
         \ 'height': height,
+        \ 'width': width,
         \ 'style': 'minimal'
         \ }
   let top = "╭" . repeat("─", width + 2) . "╮"
@@ -450,7 +450,6 @@ let g:lightline = {
       \ },
       \ 'component': { 'lineinfo': ' %2p%% %3l:%-2v' },
       \ 'component_function': {
-      \   'fileicon': 'MyFiletype',
       \   'icongitbranch': 'DrawGitBranchInfo',
       \   'iconline': 'DrawLineInfo',
       \   'gitbranch': 'fugitive#head',
@@ -464,9 +463,9 @@ autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 let g:tcd_blacklist = '\v(cheat40|denite|gundo|help|nerdtree|netrw|peekaboo|quickmenu|startify|tagbar|undotree|unite|vimfiler|vimshell|fzf)'
 
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''
-endfunction
+" function! MyFiletype()
+"   return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''
+" endfunction
 
 function! DrawGitBranchInfo()
   let branch = fugitive#head()
@@ -632,8 +631,8 @@ map <Leader>vz :VimuxZoomRunner<CR>
 " MAPPING FZF
 "========================================================
 nnoremap <c-o> <ESC>:Tags<CR>
-" nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
-nnoremap <c-p> <ESC>:call fzf#vim#files('.')<CR>
+nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
+" nnoremap <c-p> <ESC>:call fzf#vim#files('.')<CR>
 nnoremap <c-g> <ESC>:Rg<space>
 nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'})<cr>
 nnoremap <silent> <leader>mm <ESC>:Commands<CR>
@@ -647,7 +646,7 @@ nnoremap <silent> <leader>ga :BCommits<CR>
 let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
 let $FZF_DEFAULT_COMMAND = 'rg --files  --hidden --follow --glob "!{.git, node_modules}"'
 " No need preview
-" let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
@@ -725,7 +724,7 @@ let g:indentLine_color_term = 239
 let test#strategy = "vimux"
 let g:VimuxUseNearest = 0
 " Vim move
-let g:move_key_modifier = 'C'
+" let g:move_key_modifier = 'C'
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.html.eex,*.html.erb"
 "========================================================
 " Misc Functions
@@ -814,10 +813,12 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 nnoremap <Leader><Leader> <C-^>
 
 " Quicker window movement
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+let g:NERDTreeMapJumpPrevSibling=""
+let g:NERDTreeMapJumpNextSibling=""
 
 " Vim folding configuration
 set foldmethod=indent
@@ -854,3 +855,6 @@ map <Leader>r :so $MYVIMRC<cr>
 
 " Edit Vim
 nmap <leader>ve :vsplit $MYVIMRC<cr>
+
+" Save all
+nmap <leader>w :wa<cr>
