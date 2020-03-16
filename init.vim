@@ -20,7 +20,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'jacoborus/tender.vim'
 " Plug 'flrnprz/candid.vim'
 " Plug 'challenger-deep-theme/vim'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
+Plug 'mcchrish/nnn.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
@@ -572,30 +573,40 @@ highlight SignifySignChange guibg=255
 " MAPPING ALE
 "========================================================
 map <silent> <leader>p <ESC>:ALEFix<CR>
+"========================================================
+" MAPPING nnn
+"========================================================
+nnoremap <leader>n :NnnPicker '%:p:h'<CR>
+
+let g:nnn#layout = 'new' " or vnew, tabnew etc.
+let g:nnn#action = {
+      \ '<c-t>': 'tab split',
+      \ '<c-s>': 'split',
+      \ '<c-v>': 'vsplit' }
 "=======================================================
 " MAPPING NERDTree
 "========================================================
-map <silent> <leader>n <ESC>:NERDTreeToggle<CR>
-map <silent> <F1> <ESC>:NERDTreeToggle<CR>
+" map <silent> <leader>n <ESC>:NERDTreeToggle<CR>
+" map <silent> <F1> <ESC>:NERDTreeToggle<CR>
 " map <F1> :call NERDTreeToggleAndFind()<cr>
-map <silent> <leader>rev :NERDTreeFind<CR>
-let NERDTreeIgnore=['^node_modules']
-let NERDTreeMapOpenSplit = 'x'
-let NERDTreeMapOpenVSplit = 'v'
-let NERDTreeShowHidden = 1
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeHijackNetrw = 0
-let g:NERDTreeChDirMode = 2
-let g:NERDTreeAutoDeleteBuffer = 1
-let g:NERDTreeShowBookmarks = 1
-let g:NERDTreeCascadeOpenSingleChildDir = 1
-function! NERDTreeToggleAndFind()
-  if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
-    execute ':NERDTreeClose'
-  else
-    execute ':NERDTreeFind'
-  endif
-endfunction
+" map <silent> <leader>rev :NERDTreeFind<CR>
+" let NERDTreeIgnore=['^node_modules']
+" let NERDTreeMapOpenSplit = 'x'
+" let NERDTreeMapOpenVSplit = 'v'
+" let NERDTreeShowHidden = 1
+" let g:NERDTreeMinimalUI = 1
+" let g:NERDTreeHijackNetrw = 0
+" let g:NERDTreeChDirMode = 2
+" let g:NERDTreeAutoDeleteBuffer = 1
+" let g:NERDTreeShowBookmarks = 1
+" let g:NERDTreeCascadeOpenSingleChildDir = 1
+" function! NERDTreeToggleAndFind()
+"   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
+"     execute ':NERDTreeClose'
+"   else
+"     execute ':NERDTreeFind'
+"   endif
+" endfunction
 "========================================================
 " MAPPING EASYMOTION
 "========================================================
