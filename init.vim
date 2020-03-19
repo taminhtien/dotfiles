@@ -17,11 +17,12 @@ let mapleader = "\<Space>"
 " INSTALL PLUGINS
 "========================================================
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'jacoborus/tender.vim'
+" Plug 'jacoborus/tender.vim'
+Plug 'arcticicestudio/nord-vim'
 " Plug 'flrnprz/candid.vim'
 " Plug 'challenger-deep-theme/vim'
-" Plug 'scrooloose/nerdtree'
-Plug 'mcchrish/nnn.vim'
+Plug 'scrooloose/nerdtree'
+" Plug 'mcchrish/nnn.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
@@ -54,7 +55,7 @@ Plug 'uarun/vim-protobuf'
 " Plug 'Shougo/denite.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'neoclide/coc-denite'
-Plug 'terryma/vim-smooth-scroll'
+" Plug 'terryma/vim-smooth-scroll'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-cucumber'
 Plug 'editorconfig/editorconfig-vim'
@@ -111,7 +112,7 @@ setlocal foldmethod=indent
 if (has("termguicolors"))
  set termguicolors
 endif
-colorscheme tender
+colorscheme nord
 " Make comment italic
 " highlight Comment gui=italic
 "========================================================
@@ -440,7 +441,7 @@ endfunction "}}}
 "       \ },
 "       \ }
 let g:lightline = {
-      \ 'colorscheme': 'tender',
+      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ ['fileicon'], [ 'cocstatus' ], [ 'filename' ] ],
       \   'right': [ [ 'icongitbranch' ], [ 'lineinfo' ] ]
@@ -576,37 +577,39 @@ map <silent> <leader>p <ESC>:ALEFix<CR>
 "========================================================
 " MAPPING nnn
 "========================================================
-nnoremap <leader>n :NnnPicker '%:p:h'<CR>
-
-let g:nnn#layout = 'new' " or vnew, tabnew etc.
-let g:nnn#action = {
-      \ '<c-t>': 'tab split',
-      \ '<c-s>': 'split',
-      \ '<c-v>': 'vsplit' }
+" nnoremap <leader>n :NnnPicker '%:p:h'<CR>
+"
+" let g:nnn#layout = { 'left': '~20%' }
+" " let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+" " Floating window (neovim)
+" let g:nnn#action = {
+"       \ '<c-t>': 'tab split',
+"       \ '<c-x>': 'split',
+"       \ '<c-v>': 'vsplit' }
 "=======================================================
 " MAPPING NERDTree
 "========================================================
-" map <silent> <leader>n <ESC>:NERDTreeToggle<CR>
-" map <silent> <F1> <ESC>:NERDTreeToggle<CR>
-" map <F1> :call NERDTreeToggleAndFind()<cr>
-" map <silent> <leader>rev :NERDTreeFind<CR>
-" let NERDTreeIgnore=['^node_modules']
-" let NERDTreeMapOpenSplit = 'x'
-" let NERDTreeMapOpenVSplit = 'v'
-" let NERDTreeShowHidden = 1
-" let g:NERDTreeMinimalUI = 1
-" let g:NERDTreeHijackNetrw = 0
-" let g:NERDTreeChDirMode = 2
-" let g:NERDTreeAutoDeleteBuffer = 1
-" let g:NERDTreeShowBookmarks = 1
-" let g:NERDTreeCascadeOpenSingleChildDir = 1
-" function! NERDTreeToggleAndFind()
-"   if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
-"     execute ':NERDTreeClose'
-"   else
-"     execute ':NERDTreeFind'
-"   endif
-" endfunction
+map <silent> <leader>n <ESC>:NERDTreeToggle<CR>
+map <silent> <F1> <ESC>:NERDTreeToggle<CR>
+map <F1> :call NERDTreeToggleAndFind()<cr>
+map <silent> <leader>rev :NERDTreeFind<CR>
+let NERDTreeIgnore=['^node_modules']
+let NERDTreeMapOpenSplit = 'x'
+let NERDTreeMapOpenVSplit = 'v'
+let NERDTreeShowHidden = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeHijackNetrw = 0
+let g:NERDTreeChDirMode = 2
+let g:NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeShowBookmarks = 1
+let g:NERDTreeCascadeOpenSingleChildDir = 1
+function! NERDTreeToggleAndFind()
+  if (exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1)
+    execute ':NERDTreeClose'
+  else
+    execute ':NERDTreeFind'
+  endif
+endfunction
 "========================================================
 " MAPPING EASYMOTION
 "========================================================
@@ -618,10 +621,10 @@ let g:EasyMotion_smartcase = 1
 "========================================================
 " MAPPING VIMSMOOTHSCROLL
 "========================================================
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 "========================================================
 " MAPPING EASYALIGN
 "========================================================
@@ -643,8 +646,8 @@ map <Leader>vz :VimuxZoomRunner<CR>
 "========================================================
 nnoremap <c-o> <ESC>:Tags<CR>
 nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
-" nnoremap <c-p> <ESC>:call fzf#vim#files('.')<CR>
 nnoremap <c-g> <ESC>:Rg<space>
+nnoremap <c-f> <ESC>:Files<space>
 nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'})<cr>
 nnoremap <silent> <leader>mm <ESC>:Commands<CR>
 nnoremap <silent> <leader>? :History<CR>
@@ -692,10 +695,10 @@ map <silent> <leader>uet <ESC>:call UET()<CR>
 nnoremap <silent> <CR> <ESC>:noh<CR>
 map <silent> <leader>' cs'"
 map <silent> <leader>" cs"'
-map <silent> <space>h <C-W><C-H>
-map <silent> <space>j <C-W><C-J>
-map <silent> <space>k <C-W><C-K>
-map <silent> <space>l <C-W><C-L>
+" map <silent> <space>h <C-W><C-H>
+" map <silent> <space>j <C-W><C-J>
+" map <silent> <space>k <C-W><C-K>
+" map <silent> <space>l <C-W><C-L>
 " Navigation around windows
 " nnoremap <C-L> <C-W><C-L>
 " nnoremap <C-H> <C-W><C-H>
@@ -840,7 +843,7 @@ noremap Zz <c-w>_ \| <c-w>\|
 noremap Zo <c-w>=
 
 " I don't use recording, don't judge me
-map q <Nop>
+" map q <Nop>
 
 " Moving cursor in insert mode
 inoremap <C-b> <Left>
@@ -856,7 +859,7 @@ nmap <C-i> I<ESC>
 autocmd FileType ruby let b:surround_45 = "do \r end"
 
 " Edit insert mode
-inoremap jk <ESC>
+" inoremap jk <ESC>
 
 " Map 0 to move cursor to first character of line
 nmap 0 ^

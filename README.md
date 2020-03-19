@@ -1,7 +1,3 @@
-vim-devicons
+Install Tmux Nord:
 
-Install Nerd Font:
-https://github.com/ryanoasis/nerd-fonts#font-installation
-
-brew tap homebrew/cask-fonts
-brew cask install font-inconsolata-nerd-font
+https://www.nordtheme.com/docs/ports/tmux/installation#manual
