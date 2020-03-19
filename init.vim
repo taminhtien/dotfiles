@@ -17,45 +17,32 @@ let mapleader = "\<Space>"
 " INSTALL PLUGINS
 "========================================================
 call plug#begin('~/.local/share/nvim/plugged')
-" Plug 'jacoborus/tender.vim'
 Plug 'arcticicestudio/nord-vim'
-" Plug 'flrnprz/candid.vim'
-" Plug 'challenger-deep-theme/vim'
 Plug 'scrooloose/nerdtree'
-" Plug 'mcchrish/nnn.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'vim-scripts/vim-auto-save'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-rails'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-" Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-endwise'
 Plug 'mbbill/undotree'
 Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-rhubarb'
-" Plug 'matze/vim-move'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './instalL --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
 Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
 Plug 'haya14busa/incsearch.vim'
 Plug 'uarun/vim-protobuf'
-" Plug 'Shougo/denite.nvim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/coc-denite'
-" Plug 'terryma/vim-smooth-scroll'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-cucumber'
 Plug 'editorconfig/editorconfig-vim'
@@ -71,7 +58,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'rhysd/clever-f.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'zenbro/mirror.vim'
-" Plug 'Valloric/MatchTagAlways'
 Plug 'vim-scripts/git-time-lapse'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'bagrat/vim-buffet'
@@ -256,93 +242,6 @@ endfunction
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{StatusDiagnostic()}
 "========================================================
-" CONFIG DENITE
-"========================================================
-" call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
-" call denite#custom#var('grep', 'command', ['rg'])
-" call denite#custom#var('grep', 'default_opts', ['--hidden', '--vimgrep', '--heading', '-S'])
-" call denite#custom#var('grep', 'recursive_opts', [])
-" call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-" call denite#custom#var('grep', 'separator', ['--'])
-" call denite#custom#var('grep', 'final_opts', [])
-" call denite#custom#source('grep', 'converters', ['converter/abbr_word'])
-" call denite#custom#option('_', 'max_dynamic_update_candidates', 100000)
-" call denite#custom#var('outline', 'command', ['ctags'])
-" " Tell ctags write tags to stdin, so Denite can pick it up
-" call denite#custom#var('outline', 'options', ['-f -', '--excmd=number'])
-"
-" let s:denite_options = {
-"       \ 'prompt' : '',
-"       \ 'split': 'floating',
-"       \ 'start_filter': 1,
-"       \ 'auto_resize': 1,
-"       \ 'source_names': 'short',
-"       \ 'direction': 'botright',
-"       \ 'statusline': 0,
-"       \ 'cursorline': 0,
-"       \ 'highlight_matched_char': 'WildMenu',
-"       \ 'highlight_matched_range': 'WildMenu',
-"       \ 'highlight_window_background': 'Visual',
-"       \ 'highlight_filter_background': 'CocListMagentaGray',
-"       \ 'highlight_preview_line': 'Cursor',
-"       \ 'vertical_preview': 1
-"       \ }
-"
-" call denite#custom#option('default', s:denite_options)
-"
-" autocmd FileType denite call s:denite_my_settings()
-" function! s:denite_my_settings() abort
-"     nnoremap <silent><buffer><expr> <CR>
-"                 \ denite#do_map('do_action')
-"     nnoremap <silent><buffer><expr> d
-"                 \ denite#do_map('do_action', 'delete')
-"     nnoremap <silent><buffer><expr> <c-p>
-"                 \ denite#do_map('do_action', 'preview')
-"     nnoremap <silent><buffer><expr> q
-"                 \ denite#do_map('quit')
-"     nnoremap <silent><buffer><expr> i
-"                 \ denite#do_map('open_filter_buffer')
-"     nnoremap <silent><buffer><expr> <c-a>
-"                 \ denite#do_map('toggle_select_all')
-"     nnoremap <silent><buffer><expr> <c-t>
-"                 \ denite#do_map('toggle_select').'j'
-" endfunction
-"
-" autocmd FileType denite-filter call s:denite_filter_my_settings()
-" function! s:denite_filter_my_settings() abort
-"     imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
-"     inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-"     inoremap <silent><buffer><expr> <c-a>
-"                 \ denite#do_map('toggle_select_all')
-"     inoremap <silent><buffer><expr> <c-t>
-"                 \ denite#do_map('toggle_select')
-"     inoremap <silent><buffer><expr> <c-o>
-"                 \ denite#do_map('do_action', 'quickfix')
-"     inoremap <silent><buffer><expr> <esc>
-"                 \ denite#do_map('quit')
-"     inoremap <silent><buffer> <C-j>
-"                 \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-"     inoremap <silent><buffer> <C-k>
-"                 \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
-" endfunction
-"
-" nnoremap \ :Denite grep<CR>
-" nnoremap <Leader>pf :Denite file/rec<CR>
-" nnoremap <Leader>pr :Denite file/old buffer<CR>
-" nnoremap <C-o> :Denite outline<CR>
-" map * :Denite -resume -refresh<CR>
-"
-" " Some custom style
-" highlight Normal guibg=NONE
-" highlight EasyMotionTargetDefault guifg=#ffb400
-" highlight NonText guifg=#354751
-" highlight VertSplit guifg=#212C32
-" highlight link deniteSource_SymbolsName Symbol
-" highlight link deniteSource_SymbolsHeader String
-" highlight link deniteSource_grepLineNR deniteSource_grepFile
-" highlight WildMenu guibg=NONE guifg=#87bb7c
-" highlight CursorLineNr guibg=NONE
-"========================================================
 " FLOATING TERMINAL
 "========================================================
 let s:float_term_border_win = 0
@@ -397,13 +296,6 @@ endfunction
 nnoremap <Leader>at :call FloatTerm()<CR>
 " Open node REPL
 nnoremap <Leader>an :call FloatTerm('"node"')<CR>
-" Open tig, yes TIG, A FLOATING TIGGGG!!!!!!
-" nnoremap <Leader>ag :call FloatTerm('"tig"')<CR>
-"========================================================
-" CONFIG NERDTree
-"========================================================
-" Find the current file in the tree
-" nmap ;n :NERDTreeFind<CR>
 "========================================================
 " CONFIG DEOPLETE
 "========================================================
