@@ -17,7 +17,7 @@ let mapleader = "\<Space>"
 " INSTALL PLUGINS
 "========================================================
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'arcticicestudio/nord-vim'
+Plug 'jacoborus/tender.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
@@ -98,7 +98,7 @@ setlocal foldmethod=indent
 if (has("termguicolors"))
  set termguicolors
 endif
-colorscheme nord
+colorscheme tender
 " Make comment italic
 " highlight Comment gui=italic
 "========================================================
@@ -333,7 +333,7 @@ endfunction "}}}
 "       \ },
 "       \ }
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'tender',
       \ 'active': {
       \   'left': [ ['fileicon'], [ 'cocstatus' ], [ 'filename' ] ],
       \   'right': [ [ 'icongitbranch' ], [ 'lineinfo' ] ]
