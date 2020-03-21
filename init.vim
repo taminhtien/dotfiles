@@ -751,7 +751,7 @@ nmap <C-i> I<ESC>
 autocmd FileType ruby let b:surround_45 = "do \r end"
 
 " Edit insert mode
-" inoremap jk <ESC>
+inoremap jk <ESC>
 
 " Map 0 to move cursor to first character of line
 nmap 0 ^
@@ -764,3 +764,4 @@ nmap <leader>ve :vsplit $MYVIMRC<cr>
 
 " Save all
 nmap <leader>w :wa<cr>
+nmap <leader>e :q<cr>
