@@ -128,6 +128,7 @@ let g:ale_linters = {
       \   'ruby': ['rubocop', 'ruby'],
       \   'go': ['golangci-lint', 'gofmt']
       \}
+let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_sign_error   = '✘'
 let g:ale_sign_warning = '☢'
 let g:ale_lint_on_text_changed="never"
@@ -186,10 +187,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-let g:coc_global_extensions = [
-  \ 'coc-solargraph',
-  \ 'coc-snippets' ]
 
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()

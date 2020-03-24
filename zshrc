@@ -181,7 +181,6 @@ alias rs='bin/rails server'
 alias bep='bundle exec puma -p'
 alias begrpc='bundle exec eh_protobuf start -c'
 alias ss='spring stop'
-alias rails='bundle exec rails'
 
 # ----------------------
 # Utils functions
