@@ -21,20 +21,26 @@ Plug 'jacoborus/tender.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-rails'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine'
+Plug 'tpope/vim-rails'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
+" Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-endwise'
-Plug 'mbbill/undotree'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-cucumber'
+" Plug 'tpope/vim-projectionist'
+Plug 'vim-ruby/vim-ruby'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
+" Plug 'mbbill/undotree'
 Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
-Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-rhubarb'
+" Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './instalL --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -44,23 +50,19 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'tpope/vim-cucumber'
-Plug 'editorconfig/editorconfig-vim'
+" Plug 'editorconfig/editorconfig-vim'
 Plug 'fishbullet/deoplete-ruby'
 Plug 'bkad/CamelCaseMotion'
-Plug 'jeetsukumaran/vim-indentwise'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-bundler'
-Plug 'tpope/vim-projectionist'
+" Plug 'jeetsukumaran/vim-indentwise'
 Plug 'mhinz/vim-signify'
 Plug 'itchyny/lightline.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'rhysd/clever-f.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'zenbro/mirror.vim'
+" Plug 'zenbro/mirror.vim'
 Plug 'vim-scripts/git-time-lapse'
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'bagrat/vim-buffet'
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" Plug 'bagrat/vim-buffet'
 call plug#end()
 syntax on
 filetype on
@@ -74,7 +76,7 @@ set linespace=1
 set wrap linebreak nolist
 set breakindent
 set nofoldenable
-set tags=./tags;,tags;
+" set tags=./tags;,tags;./git/tags;
 set number
 set autoindent
 set clipboard=unnamedplus
@@ -92,6 +94,17 @@ autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 set bs=2 tabstop=2 shiftwidth=2 softtabstop=2
 set backupcopy=yes
 set pastetoggle=<F2>
+" Set up vim text object
+" Enabling the matchit plugin will enhance
+" Vim’s built-in % command, making it possible to jump between pairs of
+" Ruby keywords, such as class , module , def , if , do , and their
+" corresponding end (as demonstrated in Part 1).
+runtime macros/matchit.vim
+set nocompatible
+" if has("autocmd")
+"   filetype indent plugin on
+" endif
+""""""""""""""""
 xnoremap p pgvy
 setlocal foldmethod=indent
 " If you have vim >=8.0 or Neovim >= 0.1.5
@@ -137,7 +150,7 @@ call camelcasemotion#CreateMotionMappings('<leader>')
 "========================================================
 " Vim easymotion
 " nmap <silent> ;; <Plug>(easymotion-overwin-f)
-nmap <silent> ;l <Plug>(easymotion-overwin-line)
+" nmap <silent> ;l <Plug>(easymotion-overwin-line)
 " "========================================================
 " CONFIG CLEVER F
 "========================================================
@@ -441,14 +454,14 @@ endfunction
 "========================================================
 " CONFIG MIRROR VIM
 "========================================================
-nnoremap <leader>mp :MirrorPush<CR>
-nnoremap <leader>ml :MirrorPull<CR>
-nnoremap <leader>md :MirrorDiff<CR>
-nnoremap <leader>me :MirrorEdit<CR>
-nnoremap <leader>mo :MirrorOpen<CR>
-nnoremap <leader>ms :MirrorSSH<CR>
-nnoremap <leader>mi :MirrorInfo<CR>
-nnoremap <leader>mc :MirrorConfig<CR>
+" nnoremap <leader>mp :MirrorPush<CR>
+" nnoremap <leader>ml :MirrorPull<CR>
+" nnoremap <leader>md :MirrorDiff<CR>
+" nnoremap <leader>me :MirrorEdit<CR>
+" nnoremap <leader>mo :MirrorOpen<CR>
+" nnoremap <leader>ms :MirrorSSH<CR>
+" nnoremap <leader>mi :MirrorInfo<CR>
+" nnoremap <leader>mc :MirrorConfig<CR>
 "========================================================
 " CONFIG SIGNIFY
 "========================================================
@@ -507,9 +520,9 @@ endfunction
 "========================================================
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
-" map / <Plug>(easymotion-sn)
-" omap / <Plug>(easymotion-tn)
-" nmap <silent> <tab> <Plug>(easymotion-overwin-w)
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+nmap <silent> <tab> <Plug>(easymotion-overwin-w)
 "========================================================
 " MAPPING VIMSMOOTHSCROLL
 "========================================================
@@ -520,8 +533,8 @@ let g:EasyMotion_smartcase = 1
 "========================================================
 " MAPPING EASYALIGN
 "========================================================
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+" xmap ga <Plug>(EasyAlign)
+" nmap ga <Plug>(EasyAlign)
 "========================================================
 " MAPPING RSPEC VIMTEST
 "========================================================
@@ -536,11 +549,11 @@ map <Leader>vz :VimuxZoomRunner<CR>
 "========================================================
 " MAPPING FZF
 "========================================================
-nnoremap <c-o> <ESC>:Tags<CR>
+" nnoremap <c-o> <ESC>:Tags<CR>
 nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
 nnoremap <c-g> <ESC>:Rg<space>
 nnoremap <c-f> <ESC>:Files<space>
-nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'})<cr>
+" nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'})<cr>
 nnoremap <silent> <leader>mm <ESC>:Commands<CR>
 nnoremap <silent> <leader>? :History<CR>
 nnoremap <silent> <leader>A :Windows<CR>
@@ -549,7 +562,7 @@ nnoremap <silent> K :call SearchWordWithRg()<CR>
 vnoremap <silent> K :call SearchVisualSelectionWithRg()<CR>
 nnoremap <silent> <leader>gl :Commits<CR>
 nnoremap <silent> <leader>ga :BCommits<CR>
-let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
+" let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
 let $FZF_DEFAULT_COMMAND = 'rg --files  --hidden --follow --glob "!{.git, node_modules}"'
 " No need preview
 let g:fzf_preview_source=" --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
@@ -681,19 +694,19 @@ set title
 set formatoptions=tcqronj
 
 " Map keyboard for Vim Tab /vim-buffet
-noremap <Tab> :bn<CR>
-noremap <S-Tab> :bp<CR>
-noremap <Leader><Tab> :Bw<CR>
-noremap <Leader><S-Tab> :Bw!<CR>
-map <C-t> :tab split<CR>
+" noremap <Tab> :bn<CR>
+" noremap <S-Tab> :bp<CR>
+" noremap <Leader><Tab> :Bw<CR>
+" noremap <Leader><S-Tab> :Bw!<CR>
+" map <C-t> :tab split<CR>
 
-function! g:BuffetSetCustomColors()
-    hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#00FF00 guifg=#000000
-endfunction
-let g:buffet_powerline_separators = 1
-let g:buffet_tab_icon = "\uf00a"
-let g:buffet_left_trunc_icon = "\uf0a8"
-let g:buffet_right_trunc_icon = "\uf0a9"
+" function! g:BuffetSetCustomColors()
+"     hi! BuffetCurrentBuffer cterm=NONE ctermbg=5 ctermfg=8 guibg=#00FF00 guifg=#000000
+" endfunction
+" let g:buffet_powerline_separators = 1
+" let g:buffet_tab_icon = "\uf00a"
+" let g:buffet_left_trunc_icon = "\uf0a8"
+" let g:buffet_right_trunc_icon = "\uf0a9"
 
 " mouse interractive
 set mouse=nicr
@@ -765,3 +778,15 @@ nmap <leader>ve :vsplit $MYVIMRC<cr>
 " Save all
 nmap <leader>w :wa<cr>
 nmap <leader>e :q<cr>
+
+" VIM RAILS MAPPING
+nnoremap <leader>rm :Emigration<cr>
+nnoremap <leader>rc :Econtroller<cr>
+
+" Insert new line above
+nnoremap <leader>k O<Esc>
+" Insert new line below
+nnoremap <leader>j o<Esc>
+" Open relative file
+nnoremap <leader>or :e %:h<cr>
+nnoremap <leader>i :PlugInstall<cr>
