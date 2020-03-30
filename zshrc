@@ -207,6 +207,8 @@ function rz() { source ~/.zshrc }
 # Rails functions
 # rake routes
 function rr() { bundle exec rake routes | grep $1 }
+function migrate() { bundle exec rails db:migrate db:test:prepare }
+function rollback() { bundle exec rails db:rollback }
 
 # tail -f
 function tf() { tail -f $1 }
