@@ -181,7 +181,6 @@ alias rs='bin/rails server'
 alias bep='bundle exec puma -p'
 alias begrpc='bundle exec eh_protobuf start -c'
 alias ss='spring stop'
-alias rails='bundle exec rails'
 
 # ----------------------
 # Utils functions
@@ -208,6 +207,8 @@ function rz() { source ~/.zshrc }
 # Rails functions
 # rake routes
 function rr() { bundle exec rake routes | grep $1 }
+function migrate() { bundle exec rails db:migrate db:test:prepare }
+function rollback() { bundle exec rails db:rollback }
 
 # tail -f
 function tf() { tail -f $1 }
