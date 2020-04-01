@@ -787,3 +787,5 @@ nnoremap <leader>j o<Esc>
 " Open relative file
 nnoremap <leader>or :e %:h<cr>
 nnoremap <leader>i :PlugInstall<cr>
+" Break line by comma
+vnoremap bl :s/,/,\r/g<cr><C-p>
