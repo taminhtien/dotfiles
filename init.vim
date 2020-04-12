@@ -94,6 +94,9 @@ autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 set bs=2 tabstop=2 shiftwidth=2 softtabstop=2
 set backupcopy=yes
 set pastetoggle=<F2>
+" autocomplete menu provided by zsh
+set wildmenu
+set wildmode=full
 " Set up vim text object
 " Enabling the matchit plugin will enhance
 " Vim’s built-in % command, making it possible to jump between pairs of
@@ -192,7 +195,7 @@ endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-noremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" noremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
@@ -232,25 +235,29 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 " Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
+" command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
-endfunction
+" function! StatusDiagnostic() abort
+"   let info = get(b:, 'coc_diagnostic_info', {})
+"   if empty(info) | return '' | endif
+"   let msgs = []
+"   if get(info, 'error', 0)
+"     call add(msgs, 'E' . info['error'])
+"   endif
+"   if get(info, 'warning', 0)
+"     call add(msgs, 'W' . info['warning'])
+"   endif
+"   return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+" endfunction
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{StatusDiagnostic()}
+" set statusline^=%{coc#status()}%{StatusDiagnostic()}
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "========================================================
 " FLOATING TERMINAL
 "========================================================
@@ -594,7 +601,7 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 "========================================================
 map <silent> <leader>urt <ESC>:call URT()<CR>
 map <silent> <leader>uet <ESC>:call UET()<CR>
-nnoremap <silent> <CR> <ESC>:noh<CR>
+" nnoremap <silent> <CR> <ESC>:noh<CR>
 map <silent> <leader>' cs'"
 map <silent> <leader>" cs"'
 " map <silent> <space>h <C-W><C-H>
