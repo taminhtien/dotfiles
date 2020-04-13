@@ -20,8 +20,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'jacoborus/tender.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
-Plug 'easymotion/vim-easymotion'
-" Plug 'terryma/vim-multiple-cursors'
+" Plug 'easymotion/vim-easymotion'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine'
@@ -40,29 +39,26 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 " Plug 'mbbill/undotree'
 Plug 'janko-m/vim-test'
 Plug 'benmills/vimux'
-" Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './instalL --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'w0rp/ale'
 Plug 'majutsushi/tagbar'
-Plug 'haya14busa/incsearch.vim'
+" Plug 'haya14busa/incsearch.vim'
+" Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tmux-plugins/vim-tmux-focus-events'
 " Plug 'editorconfig/editorconfig-vim'
 Plug 'fishbullet/deoplete-ruby'
-Plug 'bkad/CamelCaseMotion'
+" Plug 'bkad/CamelCaseMotion'
 " Plug 'jeetsukumaran/vim-indentwise'
 Plug 'mhinz/vim-signify'
 Plug 'itchyny/lightline.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'rhysd/clever-f.vim'
 Plug 'AndrewRadev/splitjoin.vim'
-" Plug 'zenbro/mirror.vim'
 Plug 'vim-scripts/git-time-lapse'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-" Plug 'bagrat/vim-buffet'
 call plug#end()
 syntax on
 filetype on
@@ -148,23 +144,42 @@ highlight SignColumn guibg=255
 "========================================================
 " CONFIG CAMELCASE MOTION
 "========================================================
-call camelcasemotion#CreateMotionMappings('<leader>')
+" call camelcasemotion#CreateMotionMappings('<leader>')
 "========================================================
 " CONFIG VIM EASYMOTION
 "========================================================
-" Vim easymotion
+" function! s:incsearch_config(...) abort
+"   return incsearch#util#deepextend(deepcopy({
+"   \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+"   \   'keymap': {
+"   \     "\<CR>": '<Over>(easymotion)'
+"   \   },
+"   \   'is_expr': 0
+"   \ }), get(a:, 1, {}))
+" endfunction
+"
+" noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+" noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
+" noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+" let g:EasyMotion_do_mapping = 0
+" let g:EasyMotion_smartcase = 1
 " nmap <silent> ;; <Plug>(easymotion-overwin-f)
 " nmap <silent> ;l <Plug>(easymotion-overwin-line)
-" "========================================================
-" CONFIG CLEVER F
-"========================================================
-let g:clever_f_across_no_line = 1
+" map / <Plug>(easymotion-sn)
+" omap / <Plug>(easymotion-tn)
+" nmap <silent> <tab> <Plug>(easymotion-overwin-w)
 "========================================================
 " CONFIG INCSEARCH
 "========================================================
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+" map /  <Plug>(incsearch-forward)
+" map ?  <Plug>(incsearch-backward)
+" map g/ <Plug>(incsearch-stay)
+"========================================================
+" CONFIG CLEVER F
+"========================================================
+let g:clever_f_across_no_line = 1
+map ; <Plug>(clever-f-repeat-forward)
+map , <Plug>(clever-f-repeat-back)
 "========================================================
 " CONFIG AUTO PAIRS
 "========================================================
@@ -259,61 +274,6 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "========================================================
-" FLOATING TERMINAL
-"========================================================
-" let s:float_term_border_win = 0
-" let s:float_term_win = 0
-" function! FloatTerm(...)
-"   " Configuration
-"   let height = float2nr((&lines - 2) * 0.6)
-"   let row = float2nr((&lines - height) / 2)
-"   let width = float2nr(&columns * 0.6)
-"   let col = float2nr((&columns - width) / 2)
-"   " Border Window
-"   let border_opts = {
-"         \ 'relative': 'editor',
-"         \ 'row': row - 1,
-"         \ 'col': col - 2,
-"         \ 'width': width + 4,
-"         \ 'height': height + 2,
-"         \ 'style': 'minimal'
-"         \ }
-"   " Terminal Window
-"   let opts = {
-"         \ 'relative': 'editor',
-"         \ 'row': row,
-"         \ 'col': col,
-"         \ 'height': height,
-"         \ 'width': width,
-"         \ 'style': 'minimal'
-"         \ }
-"   let top = "╭" . repeat("─", width + 2) . "╮"
-"   let mid = "│" . repeat(" ", width + 2) . "│"
-"   let bot = "╰" . repeat("─", width + 2) . "╯"
-"   let lines = [top] + repeat([mid], height) + [bot]
-"   let bbuf = nvim_create_buf(v:false, v:true)
-"   call nvim_buf_set_lines(bbuf, 0, -1, v:true, lines)
-"   let s:float_term_border_win = nvim_open_win(bbuf, v:true, border_opts)
-"   let buf = nvim_create_buf(v:false, v:true)
-"   let s:float_term_win = nvim_open_win(buf, v:true, opts)
-"   " Styling
-"   call setwinvar(s:float_term_border_win, '&winhl', 'Normal:Normal')
-"   call setwinvar(s:float_term_win, '&winhl', 'Normal:Normal')
-"   if a:0 == 0
-"     terminal
-"   else
-"     call termopen(a:1)
-"   endif
-"   startinsert
-"   " Close border window when terminal window close
-"   autocmd TermClose * ++once :bd! | call nvim_win_close(s:float_term_border_win, v:true)
-" endfunction
-"
-" " Open terminal
-" nnoremap <Leader>at :call FloatTerm()<CR>
-" " Open node REPL
-" nnoremap <Leader>an :call FloatTerm('"node"')<CR>
-"========================================================
 " CONFIG DEOPLETE
 "========================================================
 set completeopt+=noselect
@@ -333,22 +293,6 @@ endfunction "}}}
 "========================================================
 " CONFIG LIGHTLINE
 "========================================================
-" let g:lightline = {
-"       \ 'colorscheme': 'tender',
-"       \ 'active': {
-"       \   'left': [ ['mode', 'paste'], ['readonly', 'modified', 'gitbranch', 'filename'] ],
-"       \   'right': [ ['lineinfo'], [ 'percent' ], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-"       \ },
-"       \ 'component_function': {
-"       \   'filename': 'LightlineFilename',
-"       \   'gitbranch': 'fugitive#head',
-"       \   'percent': 'MyLightLinePercent',
-"       \   'lineinfo': 'MyLightLineLineInfo',
-"       \   'fileformat': 'LightlineFileformat',
-"       \   'filetype': 'LightlineFiletype',
-"       \   'modified': 'MyLightLineSignify'
-"       \ },
-"       \ }
 let g:lightline = {
       \ 'colorscheme': 'tender',
       \ 'active': {
@@ -374,10 +318,6 @@ autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 let g:tcd_blacklist = '\v(cheat40|denite|gundo|help|nerdtree|netrw|peekaboo|quickmenu|startify|tagbar|undotree|unite|vimfiler|vimshell|fzf)'
 
-" function! MyFiletype()
-"   return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() : '') : ''
-" endfunction
-
 function! DrawGitBranchInfo()
   let branch = fugitive#head()
   return len(branch) > 0 ? " " . branch : ""
@@ -402,70 +342,6 @@ function! LightLineFilename()
   return name
 endfunction
 
-" function! LightlineFileformat()
-"   return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? &fileformat : ''
-" endfunction
-" function! LightlineFiletype()
-"   return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? &ft : ''
-" endfunction
-" function! Devicon()
-"   return &ft !~# g:tcd_blacklist && winwidth(0) > 70 ? (WebDevIconsGetFileTypeSymbol()) : ''
-" endfunction
-" function! LightlineFilename()
-"   let root = fnamemodify(get(b:, 'git_dir'), ':h')
-"   let path = expand('%:p')
-"   if path[:len(root)-1] ==# root && winwidth(0) > 40
-"     return &filetype !~# g:tcd_blacklist ? path[len(root)+1:] : ''
-"   elseif path[:len(root)-1] ==# root && winwidth(0) <= 40
-"     return &filetype !~# g:tcd_blacklist ? expand('%:t') : ''
-"   endif
-"   return &filetype !~# g:tcd_blacklist && winwidth(0) > 70 ? expand('%') : &filetype
-" endfunction
-" function! MyLightLinePercent()
-"   if &ft !~# g:tcd_blacklist && winwidth(0) > 70
-"     return line('.') * 100 / line('$') . '%'
-"   else
-"     return ''
-"   endif
-" endfunction
-" function! MyLightLineLineInfo()
-"   if &ft !~# g:tcd_blacklist
-"     return line('.').':'. col('.')
-"   else
-"     return ''
-"   endif
-" endfunction
-" function! MyLightLineSignify()
-"   let [added, modified, removed] = sy#repo#get_stats()
-"   let l:sy = ''
-"   for [flag, flagcount] in [
-"         \   [exists("g:signify_sign_add")?g:signify_sign_add:'+', added],
-"         \   [exists("g:signify_sign_delete")?g:signify_sign_delete:'-', removed],
-"         \   [exists("g:signify_sign_change")?g:signify_sign_change:'!', modified]
-"         \ ]
-"     if flagcount> 0
-"       let l:sy .= printf('%s%d', flag, flagcount)
-"     endif
-"   endfor
-"   if !empty(l:sy) && &ft !~# g:tcd_blacklist
-"     let l:sy = printf('[%s]', l:sy)
-"     let l:sy_vcs = get(b:sy, 'updated_by', '???')
-"     return printf('%s%s', l:sy_vcs, l:sy)
-"   else
-"     return ''
-"   endif
-" endfunction
-"========================================================
-" CONFIG MIRROR VIM
-"========================================================
-" nnoremap <leader>mp :MirrorPush<CR>
-" nnoremap <leader>ml :MirrorPull<CR>
-" nnoremap <leader>md :MirrorDiff<CR>
-" nnoremap <leader>me :MirrorEdit<CR>
-" nnoremap <leader>mo :MirrorOpen<CR>
-" nnoremap <leader>ms :MirrorSSH<CR>
-" nnoremap <leader>mi :MirrorInfo<CR>
-" nnoremap <leader>mc :MirrorConfig<CR>
 "========================================================
 " CONFIG SIGNIFY
 "========================================================
@@ -483,18 +359,6 @@ highlight SignifySignChange guibg=255
 " MAPPING ALE
 "========================================================
 map <silent> <leader>p <ESC>:ALEFix<CR>
-"========================================================
-" MAPPING nnn
-"========================================================
-" nnoremap <leader>n :NnnPicker '%:p:h'<CR>
-"
-" let g:nnn#layout = { 'left': '~20%' }
-" " let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-" " Floating window (neovim)
-" let g:nnn#action = {
-"       \ '<c-t>': 'tab split',
-"       \ '<c-x>': 'split',
-"       \ '<c-v>': 'vsplit' }
 "=======================================================
 " MAPPING NERDTree
 "========================================================
@@ -519,26 +383,6 @@ function! NERDTreeToggleAndFind()
     execute ':NERDTreeFind'
   endif
 endfunction
-"========================================================
-" MAPPING EASYMOTION
-"========================================================
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-nmap <silent> <tab> <Plug>(easymotion-overwin-w)
-"========================================================
-" MAPPING VIMSMOOTHSCROLL
-"========================================================
-" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-"========================================================
-" MAPPING EASYALIGN
-"========================================================
-" xmap ga <Plug>(EasyAlign)
-" nmap ga <Plug>(EasyAlign)
 "========================================================
 " MAPPING RSPEC VIMTEST
 "========================================================
@@ -604,15 +448,6 @@ map <silent> <leader>uet <ESC>:call UET()<CR>
 " nnoremap <silent> <CR> <ESC>:noh<CR>
 map <silent> <leader>' cs'"
 map <silent> <leader>" cs"'
-" map <silent> <space>h <C-W><C-H>
-" map <silent> <space>j <C-W><C-J>
-" map <silent> <space>k <C-W><C-K>
-" map <silent> <space>l <C-W><C-L>
-" Navigation around windows
-" nnoremap <C-L> <C-W><C-L>
-" nnoremap <C-H> <C-W><C-H>
-" nnoremap <C-J> <C-W><C-J>
-" nnoremap <C-K> <C-W><C-K>
 
 map <silent> <leader>u :UndotreeToggle<CR>
 map <silent> <leader>i <ESC>:call IndentGuideToggle()<CR>
@@ -680,12 +515,6 @@ endfunction
   :  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
   :augroup END
-
-"========================================================
-" VIM AUTO SAVE
-"========================================================
-let g:auto_save = 0  " enable AutoSave on Vim startup
-let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
 
 "========================================================
 " MIGRATION OLD VIM CONFIGURATION

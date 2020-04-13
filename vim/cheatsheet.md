@@ -88,7 +88,7 @@
 |[count]<C-w>-|Decrease the height of the current window by count|
 |[count]<C-w>+|Increase the height of the current window by count|
 |[count]<C-w><|Decrease the width of the current window by count|
-|[count]<C-w>>|Increase the width of the current window by count|
+|[count]<C-w>>|Increase the width of tdecorationshe current window by count|
 |<C-w>=|Equalize the width and height of all windows|
 
 #### Positioning the Buffer In the Window
