@@ -88,7 +88,7 @@ set encoding=utf8
 " set background=light
 set textwidth=0
 set wrapmargin=0
-set cc=80
+set cc=120
 set expandtab
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 set bs=2 tabstop=2 shiftwidth=2 softtabstop=2
@@ -548,7 +548,7 @@ map <Leader>vz :VimuxZoomRunner<CR>
 "========================================================
 " nnoremap <c-o> <ESC>:Tags<CR>
 nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
-nnoremap <c-g> <ESC>:Rg<space>
+" nnoremap <c-g> <ESC>:Rg<space>
 nnoremap <c-f> <ESC>:Files<space>
 " nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'})<cr>
 nnoremap <silent> <leader>mm <ESC>:Commands<CR>
@@ -729,10 +729,6 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 nnoremap <Leader><Leader> <C-^>
 
 " Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
 let g:NERDTreeMapJumpPrevSibling=""
 let g:NERDTreeMapJumpNextSibling=""
 
@@ -755,7 +751,7 @@ inoremap <C-f> <Right>
 
 " vim key mapping
 nmap <C-e> A<ESC>
-nmap <C-i> I<ESC>
+" nmap <C-i> I<ESC>
 
 " Vim Surround customization
 autocmd FileType ruby let b:surround_45 = "do \r end"
