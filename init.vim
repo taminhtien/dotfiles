@@ -20,7 +20,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'jacoborus/tender.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jiangmiao/auto-pairs'
@@ -28,6 +28,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 " Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-bundler'
@@ -76,7 +77,7 @@ set linespace=1
 set wrap linebreak nolist
 set breakindent
 set nofoldenable
-" set tags=./tags;,tags;./git/tags;
+set tags=./tags;,tags;./git/tags;
 set number
 set autoindent
 set clipboard=unnamedplus
@@ -88,12 +89,13 @@ set encoding=utf8
 " set background=light
 set textwidth=0
 set wrapmargin=0
-set cc=120
+set cc=80
 set expandtab
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 set bs=2 tabstop=2 shiftwidth=2 softtabstop=2
 set backupcopy=yes
 set pastetoggle=<F2>
+set noswapfile
 " Set up vim text object
 " Enabling the matchit plugin will enhance
 " Vim’s built-in % command, making it possible to jump between pairs of
@@ -159,15 +161,15 @@ let g:clever_f_across_no_line = 1
 "========================================================
 " CONFIG INCSEARCH
 "========================================================
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+" map /  <Plug>(incsearch-forward)
+" map ?  <Plug>(incsearch-backward)
+" map g/ <Plug>(incsearch-stay)
 "========================================================
 " CONFIG AUTO PAIRS
 "========================================================
-let g:AutoPairsShortcutFastWrap = '<C->>'
-let g:AutoPairsShortcutBakkInsert = '<C-<>'
-let g:AutoPairsFlyMode = 0
+" let g:AutoPairsShortcutFastWrap = '<C-e>'
+" let g:AutoPairsShortcutBakkInsert = '<C-b>'
+" let g:AutoPairsFlyMode = 0
 "========================================================
 " CONFIG COC NVIM
 "========================================================
@@ -194,63 +196,63 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Coc only does snippet and additional edit on confirm.
 noremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" nmap <silent> [c <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]c <Plug>(coc-diagnostic-next)
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 " nmap <silent> cs <Plug>(coc-search)
-nnoremap <silent> sd :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" nnoremap <silent> sd :call <SID>show_documentation()<CR>
+" function! s:show_documentation()
+"   if &filetype == 'vim'
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 " Highlight symbol under cursor on CursorHold
 " autocmd CursorHold * silent call CocActionAsync('highlight')
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" nmap <leader>rn <Plug>(coc-rename)
 " Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-augroup mygroup
-  autocmd!
+" vmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+" augroup mygroup
+  " autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+  " autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup end
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" vmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+" nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+" nmap <leader>qf  <Plug>(coc-fix-current)
 " Use `:Format` for format current buffer
-command! -nargs=0 Format :call CocAction('format')
+" command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` for fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
-endfunction
+" function! StatusDiagnostic() abort
+"   let info = get(b:, 'coc_diagnostic_info', {})
+"   if empty(info) | return '' | endif
+"   let msgs = []
+"   if get(info, 'error', 0)
+"     call add(msgs, 'E' . info['error'])
+"   endif
+"   if get(info, 'warning', 0)
+"     call add(msgs, 'W' . info['warning'])
+"   endif
+"   return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+" endfunction
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{StatusDiagnostic()}
+" set statusline^=%{coc#status()}%{StatusDiagnostic()}
 "========================================================
 " FLOATING TERMINAL
 "========================================================
@@ -515,11 +517,11 @@ endfunction
 "========================================================
 " MAPPING EASYMOTION
 "========================================================
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-nmap <silent> <tab> <Plug>(easymotion-overwin-w)
+" let g:EasyMotion_do_mapping = 0
+" let g:EasyMotion_smartcase = 1
+" map / <Plug>(easymotion-sn)
+" omap / <Plug>(easymotion-tn)
+" nmap <silent> <tab> <Plug>(easymotion-overwin-w)
 "========================================================
 " MAPPING VIMSMOOTHSCROLL
 "========================================================
@@ -750,7 +752,7 @@ inoremap <C-k> <Up>
 inoremap <C-f> <Right>
 
 " vim key mapping
-nmap <C-e> A<ESC>
+" nmap <C-e> A<ESC>
 " nmap <C-i> I<ESC>
 
 " Vim Surround customization
@@ -760,7 +762,7 @@ autocmd FileType ruby let b:surround_45 = "do \r end"
 inoremap jk <ESC>
 
 " Map 0 to move cursor to first character of line
-nmap 0 ^
+" nmap 0 ^
 
 " Reloads $MYVIMRC
 map <Leader>r :so $MYVIMRC<cr>
@@ -769,7 +771,7 @@ map <Leader>r :so $MYVIMRC<cr>
 nmap <leader>ve :vsplit $MYVIMRC<cr>
 
 " Save all
-nmap <leader>w :wa<cr>
+nmap <leader>w :w<cr>
 nmap <leader>e :q<cr>
 
 " VIM RAILS MAPPING
