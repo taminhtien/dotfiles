@@ -1,3 +1,4 @@
+source ~/workspace/dotfiles/antigen.zsh
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -6,8 +7,26 @@ export ZSH="/Users/eh/.oh-my-zsh"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export CLICOLOR=1
+export LS_COLORS=GxFxCxDxBxegedabagaced
 export EDITOR=nvim
 
+antigen bundle zsh-users/zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#D7D7D7,underline"
+
+antigen theme denysdovhan/spaceship-prompt
+
+# Various auto-completions in zsh
+# Used for tmuxinator, nvm
+# https://github.com/zsh-users/zsh-completions/tree/master/src
+antigen bundle zsh-users/zsh-completions
+
+# zsh-syntax-highlighting must be the last!
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen apply
+
+# Load zsh autocomplete
+autoload -U compinit && compinit
 # tmuxinator will set GEM_HOME to /usr/local/Cellar/tmuxinator/1.1.4/libexec
 # directory which may lead to some gem issues
 # This will reset GEM_HOME so it will work correctly
@@ -16,7 +35,7 @@ unset -v GEM_HOME
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="geoffgarside"
+# ZSH_THEME="geoffgarside"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -105,6 +124,38 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Base16 Solarized Light
+# Author: Ethan Schoonover (modified by aramisgithub)
+
+_gen_fzf_default_opts() {
+
+local color00='#fdf6e3'
+local color01='#eee8d5'
+local color02='#93a1a1'
+local color03='#839496'
+local color04='#657b83'
+local color05='#586e75'
+local color06='#073642'
+local color07='#002b36'
+local color08='#dc322f'
+local color09='#cb4b16'
+local color0A='#b58900'
+local color0B='#859900'
+local color0C='#2aa198'
+local color0D='#268bd2'
+local color0E='#6c71c4'
+local color0F='#d33682'
+
+export FZF_DEFAULT_OPTS="
+  --color=bg+:$color01,bg:$color00,spinner:$color0C,hl:$color0D
+  --color=fg:$color04,header:$color0D,info:$color0A,pointer:$color0C
+  --color=marker:$color0C,fg+:$color06,prompt:$color0A,hl+:$color0D
+"
+
+}
+
+_gen_fzf_default_opts
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
