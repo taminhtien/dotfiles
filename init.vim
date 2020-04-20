@@ -33,7 +33,6 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'janko-m/vim-test'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './instalL --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'w0rp/ale'
 Plug 'haya14busa/incsearch.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -70,6 +69,8 @@ set laststatus=2
 set encoding=utf8
 set background=light
 colorscheme NeoSolarized
+highlight CocErrorHighlight ctermfg=Red guifg=#ff0000
+highlight CocWarningHighlight ctermfg=Brown guifg=#ff0000
 set textwidth=0
 set wrapmargin=0
 set cc=80
@@ -106,39 +107,10 @@ set foldlevelstart=20
 " corresponding end (as demonstrated in Part 1).
 runtime macros/matchit.vim
 set nocompatible
-"========================================================
-" CONFIG ALE
-"========================================================
-let g:ale_fixers = {
-      \ 'ruby': ['rubocop'],
-      \ 'javascript': ['prettier'],
-      \ 'python': ['black'],
-      \ 'go': ['gofmt']
-      \}
-let g:ale_linters = {
-      \   'javascript': ['prettier', 'eslint'],
-      \   'ruby': ['rubocop', 'ruby'],
-      \   'go': ['golangci-lint', 'gofmt']
-      \}
-" let g:ale_ruby_rubocop_executable = 'bundle'
-let g:ale_sign_error   = '✘'
-let g:ale_sign_warning = '☢'
-let g:ale_lint_on_text_changed="never"
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_set_highlights = 1
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 0
-let g:ale_fix_on_save = 1
-" " python
-let g:ale_python_pylint_options = '--load-plugins pylint_django'
-highlight SignColumn guibg=255
-map <silent> <leader>p <ESC>:ALEFix<CR>
 " "========================================================
 " CONFIG VIM AIRLINE
 "========================================================
-let g:airline_extensions=['coc', 'branch', 'ale']
+let g:airline_extensions=['coc', 'branch']
 " "========================================================
 " CONFIG CLEVER F
 "========================================================
@@ -157,7 +129,28 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+inoremap <silent><expr> <c-space> coc#refresh()
+
 let g:coc_global_extensions = [ 'coc-tsserver', 'coc-eslint', 'coc-json', 'coc-prettier', 'coc-css', 'coc-html', 'coc-snippets', 'coc-solargraph' ]
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 "========================================================
 " CONFIG SIGNIFY
 "========================================================

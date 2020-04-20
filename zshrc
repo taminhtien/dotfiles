@@ -3,7 +3,7 @@ source ~/workspace/dotfiles/antigen.zsh
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/eh/.oh-my-zsh"
+export ZSH=~/.oh-my-zsh
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -12,7 +12,7 @@ export LS_COLORS=GxFxCxDxBxegedabagaced
 export EDITOR=nvim
 
 antigen bundle zsh-users/zsh-autosuggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#D7D7D7,underline"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=250,underline"
 
 antigen theme denysdovhan/spaceship-prompt
 
@@ -171,6 +171,10 @@ export YVM_DIR=/usr/local/opt/yvm
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 # ----------------------
 # Git Aliases
 # ----------------------
@@ -269,3 +273,7 @@ function rollback() { bundle exec rails db:rollback }
 function tf() { tail -f $1 }
 
 function e() { exit }
+
+  # Set Spaceship ZSH as a prompt
+  autoload -U promptinit; promptinit
+  prompt spaceship

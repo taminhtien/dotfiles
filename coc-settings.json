@@ -1,0 +1,31 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "ruby"
+  ],
+  "diagnostic.refreshOnInsertMode": false,
+  "diagnostic.refreshAfterSave": false,
+  "diagnostic.virtualText": false,
+  "diagnostic.virtualTextPrefix": "~~> ",
+  "codeLens.enable": true,
+  "solargraph.diagnostics": true,
+  "solargraph.autoformat": true,
+  "solargraph.formatting": true,
+  "solargraph.completion": true,
+  "solargraph.symbols": true,
+  "solargraph.definitions": true,
+  "solargraph.rename": true,
+  "solargraph.references": true,
+  "solargraph.folding": true,
+  "solargraph.hover": true,
+  "snippets.ultisnips.directories": [
+    "~/workspace/dotfiles/snippets"
+  ],
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "prettier.disableSuccessMessage": true
+}
