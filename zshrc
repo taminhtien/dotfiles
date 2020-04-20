@@ -273,7 +273,3 @@ function rollback() { bundle exec rails db:rollback }
 function tf() { tail -f $1 }
 
 function e() { exit }
-
-  # Set Spaceship ZSH as a prompt
-  autoload -U promptinit; promptinit
-  prompt spaceship
