@@ -27,6 +27,7 @@ Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-projectionist'
 Plug 'vim-ruby/vim-ruby'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
@@ -115,6 +116,29 @@ let g:airline_extensions=['coc', 'branch']
 " CONFIG CLEVER F
 "========================================================
 let g:clever_f_across_no_line = 1
+" "========================================================
+" CONFIG VIM PROJECTIONIST
+"========================================================
+let g:rails_projections = {
+      \  "app/controllers/*_controller.rb": {
+      \      "test": [
+      \        "spec/requests/{}_spec.rb",
+      \        "spec/controllers/{}_controller_spec.rb",
+      \        "test/controllers/{}_controller_test.rb"
+      \      ],
+      \      "alternate": [
+      \        "spec/requests/{}_spec.rb",
+      \        "spec/controllers/{}_controller_spec.rb",
+      \        "test/controllers/{}_controller_test.rb"
+      \      ],
+      \   },
+      \   "spec/requests/*_spec.rb": {
+      \      "command": "request",
+      \      "alternate": "app/controllers/{}_controller.rb",
+      \      "template": "require 'rails_helper'\n\n" .
+      \        "RSpec.describe '{}' do\nend",
+      \   },
+      \ }
 "========================================================
 " CONFIG COC NVIM
 "========================================================
@@ -265,7 +289,7 @@ let g:AutoPairsMultilineClose = 0
 " INDENT LINE CONFIG
 "========================================================
 let g:indentLine_char = '│'
-let g:indentLine_enabled = 1
+let g:indentLine_enabled = 0
 let g:indentLine_color_term = 239
 "========================================================
 " VIM TEST CONFIG
@@ -326,6 +350,7 @@ nmap <leader>e :q<cr>
 " VIM RAILS MAPPING
 nnoremap <leader>rm :Emigration<cr>
 nnoremap <leader>rc :Econtroller<cr>
+nnoremap <leader>a :A<cr>
 
 " Insert new line above
 nnoremap <leader>k O<Esc>
@@ -337,3 +362,7 @@ nnoremap <leader>i :PlugInstall<cr>
 
 " Break line by comma
 vnoremap bl :s/,/,\r/g<cr><C-p>
+
+" Quick fix mappings
+nnoremap <leader>cc :cclose<cr>
+nnoremap <leader>co :copen<Esc>
