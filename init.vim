@@ -37,6 +37,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'haya14busa/incsearch.vim'
 Plug 'uarun/vim-protobuf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'w0rp/ale'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'mhinz/vim-signify'
 Plug 'sheerun/vim-polyglot'
@@ -70,8 +71,8 @@ set laststatus=2
 set encoding=utf8
 set background=light
 colorscheme NeoSolarized
-highlight CocErrorHighlight ctermfg=Red guifg=#ff0000
-highlight CocWarningHighlight ctermfg=Brown guifg=#ff0000
+" highlight CocErrorHighlight ctermfg=Red guifg=#ff0000
+" highlight CocWarningHighlight ctermfg=Brown guifg=#ff0000
 set textwidth=0
 set wrapmargin=0
 set cc=80
@@ -112,6 +113,34 @@ set nocompatible
 " CONFIG VIM AIRLINE
 "========================================================
 let g:airline_extensions=['coc', 'branch']
+"========================================================
+" CONFIG ALE
+"========================================================
+let g:ale_fixers = {
+      \ 'ruby': ['rubocop'],
+      \ 'javascript': ['prettier'],
+      \ 'python': ['black'],
+      \ 'go': ['gofmt']
+      \}
+let g:ale_linters = {
+      \   'javascript': ['prettier', 'eslint'],
+      \   'ruby': ['rubocop', 'ruby'],
+      \   'go': ['golangci-lint', 'gofmt']
+      \}
+let g:ale_sign_error   = '✘'
+let g:ale_sign_warning = '☢'
+let g:ale_lint_on_text_changed="never"
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_set_highlights = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 1
+let g:ale_fix_on_save = 1
+" python
+let g:ale_python_pylint_options = '--load-plugins pylint_django'
+highlight SignColumn guibg=255
+"========================================================
 " "========================================================
 " CONFIG CLEVER F
 "========================================================
