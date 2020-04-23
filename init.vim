@@ -29,6 +29,7 @@ Plug 'tpope/vim-cucumber'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
 Plug 'vim-ruby/vim-ruby'
+Plug 'benmills/vimux'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'janko-m/vim-test'
@@ -127,6 +128,7 @@ let g:ale_linters = {
       \   'ruby': ['rubocop', 'ruby'],
       \   'go': ['golangci-lint', 'gofmt']
       \}
+let g:ale_ruby_rubocop_executable = 'bundle'
 let g:ale_sign_error   = '✘'
 let g:ale_sign_warning = '☢'
 let g:ale_lint_on_text_changed="never"
@@ -136,7 +138,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_set_highlights = 1
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 1
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 " python
 let g:ale_python_pylint_options = '--load-plugins pylint_django'
 highlight SignColumn guibg=255
@@ -323,7 +325,7 @@ let g:indentLine_color_term = 239
 "========================================================
 " VIM TEST CONFIG
 "========================================================
-let test#strategy = "dispatch"
+let test#strategy = "vimux"
 "========================================================
 " AUGROUP
 "========================================================
