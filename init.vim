@@ -142,6 +142,7 @@ let g:ale_fix_on_save = 0
 " python
 let g:ale_python_pylint_options = '--load-plugins pylint_django'
 highlight SignColumn guibg=255
+map <silent> <leader>p <ESC>:ALEFix<CR>
 "========================================================
 " "========================================================
 " CONFIG CLEVER F
