@@ -245,7 +245,7 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 "========================================================
 " MISC MAPPING
 "========================================================
-nnoremap <silent> <CR> <ESC>:noh<CR>
+" nnoremap <silent> <CR> <ESC>:noh<CR>
 map <silent> <leader>' cs'"
 map <silent> <leader>" cs"'
 
