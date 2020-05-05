@@ -302,7 +302,7 @@ let g:fzf_layout = { 'down': '~100%' }
 "========================================================
 " MISC MAPPING
 "========================================================
-nnoremap <silent> <CR> <ESC>:noh<CR>
+" nnoremap <silent> <CR> <ESC>:noh<CR>
 map <silent> <leader>' cs'"
 map <silent> <leader>" cs"'
 
