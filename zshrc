@@ -1,4 +1,5 @@
 source ~/workspace/dotfiles/antigen.zsh
+source ~/.zshenv
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -212,6 +213,28 @@ alias gstl='git stash list'
 alias gstp='git stash pop'
 alias gsts='git stash save'
 alias gfa='git fetch --all'
+# ----------------------
+# EH Project Aliases
+# ----------------------
+alias mgh='open https://github.com/Thinkei/meeting-management'
+
+alias mss='heroclistag app status meeting-management'
+alias mcs='heroclistag app run-tty meeting-management'
+alias mds='heroclistag app deployment-status meeting-management'
+
+alias msp='herocliprod app status meeting-management'
+alias mcp='herocliprod app run-tty meeting-management'
+alias mdp='herocliprod app deployment-status meeting-management'
+
+alias cgh='open https://github.com/Thinkei/comment'
+
+alias css='heroclistag app status comment'
+alias ccs='heroclistag app run-tty comment'
+alias cds='heroclistag app deployment-status comment'
+
+alias csp='herocliprod app status comment'
+alias ccp='herocliprod app run-tty comment'
+alias cdp='herocliprod app deployment-status comment'
 
 # ----------------------
 # Git Functions
@@ -266,8 +289,8 @@ function rz() { source ~/.zshrc }
 # Rails functions
 # rake routes
 function rr() { bundle exec rake routes | grep $1 }
-function migrate() { bundle exec rails db:migrate db:test:prepare }
-function rollback() { bundle exec rails db:rollback }
+function migrate() { bundle exec rake db:migrate db:test:prepare }
+function rollback() { bundle exec rake db:rollback }
 
 # tail -f
 function tf() { tail -f $1 }

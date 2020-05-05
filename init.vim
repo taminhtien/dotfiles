@@ -32,6 +32,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'benmills/vimux'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'kana/vim-textobj-line'
 Plug 'janko-m/vim-test'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './instalL --all' }
 Plug 'junegunn/fzf.vim'
@@ -257,7 +258,7 @@ map <Leader>ta :TestSuite<CR>
 "========================================================
 " nnoremap <c-o> <ESC>:Tags<CR>
 nnoremap <c-p> <ESC>:call fzf#vim#files('.', {'options': g:fzf_preview_source})<CR>
-nnoremap <c-g> <ESC>:Rg<space>
+nnoremap <leader>s <ESC>:Rg<space>
 " nnoremap <c-f> <ESC>:Files<space>
 " nnoremap <c-]> <ESC>:call fzf#vim#tags(expand("<cword>"), {'options': '--exact'})<cr>
 " nnoremap <silent> <leader>mm <ESC>:Commands<CR>
@@ -294,10 +295,10 @@ function! SearchVisualSelectionWithRg() range
   execute 'SearchExactWord' selection
 endfunction
 
-let g:fzf_prefer_tmux = 1
-" let g:fzf_layout = { 'down': '~100%' }
+" let g:fzf_prefer_tmux = 1
+let g:fzf_layout = { 'down': '~100%' }
 " let g:fzf_layout = { 'window': '10new' }
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+" let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 "========================================================
 " MISC MAPPING
 "========================================================
