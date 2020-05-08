@@ -15,7 +15,7 @@ export EDITOR=nvim
 antigen bundle zsh-users/zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=250,underline"
 
-antigen theme denysdovhan/spaceship-prompt
+# antigen theme denysdovhan/spaceship-prompt
 
 # Various auto-completions in zsh
 # Used for tmuxinator, nvm
@@ -27,7 +27,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
 
 # Load zsh autocomplete
-autoload -U compinit && compinit
+# autoload -U compinit && compinit
 # tmuxinator will set GEM_HOME to /usr/local/Cellar/tmuxinator/1.1.4/libexec
 # directory which may lead to some gem issues
 # This will reset GEM_HOME so it will work correctly
@@ -36,7 +36,7 @@ unset -v GEM_HOME
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="geoffgarside"
+ZSH_THEME="geoffgarside"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
