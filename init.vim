@@ -371,7 +371,7 @@ autocmd FileType ruby let b:surround_45 = "do \r end"
 inoremap jk <ESC>
 
 " Reloads $MYVIMRC
-map <Leader>r :so $MYVIMRC<cr>
+map <Leader>rv :so $MYVIMRC<cr>
 
 " Edit Vim
 nmap <leader>ve :vsplit $MYVIMRC<cr>
@@ -384,6 +384,8 @@ nmap <leader>e :q<cr>
 nnoremap <leader>rm :Emigration<cr>
 nnoremap <leader>rc :Econtroller<cr>
 nnoremap <leader>a :A<cr>
+" Enter command line mode
+nnoremap <leader>rb <ESC>:!bundle<cr>
 
 " Insert new line above
 nnoremap <leader>k O<Esc>
