@@ -13,6 +13,9 @@ let mapleader = "\<Space>"
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'jacoborus/tender.vim'
 Plug 'iCyMind/NeoSolarized'
+Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
+Plug 'KeitaNakamura/neodark.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tcomment_vim'
 Plug 'christoomey/vim-tmux-navigator'
@@ -71,8 +74,8 @@ set splitbelow
 set lazyredraw
 set laststatus=2
 set encoding=utf8
-set background=light
-colorscheme NeoSolarized
+set background=dark
+colorscheme one
 " highlight CocErrorHighlight ctermfg=Red guifg=#ff0000
 " highlight CocWarningHighlight ctermfg=Brown guifg=#ff0000
 set textwidth=0
